@@ -225,6 +225,7 @@ public class ProductController {
 			product.setP_img("upload/"+savedName);
 			a =ps.productUpdate(product);
 		}
+		System.out.println("productController productUpdate a->"+a);
 		
 		model.addAttribute("a", a);
 		model.addAttribute("p_code", product.getP_code());
@@ -261,19 +262,14 @@ public class ProductController {
         String deleteFileName1 = uploadPath + product.getP_img();
 		System.out.println("getP_img"+product.getP_img());
        
-		int result=0;
-		System.out.println("ProductController productDelete result->"+result);
-		result = ps.productDelete(product);
-		
-		
-		model.addAttribute("result", result);
-		model.addAttribute("p_code", product.getP_code());
-		model.addAttribute("p_size", product.getP_size());
+		int b=0;
+		b = ps.productDelete(product);
+
 		
 		logger.info("filedelete result->"+deleteFileName);
 		
 		
-		
+		int result = 0;
         File file =new File (deleteFileName1);
 		System.out.println("delteFileName1->"+deleteFileName1);
         if(file.exists()) {
@@ -288,6 +284,13 @@ public class ProductController {
 			System.out.println("파일이 존재하지않습니다.");
 			result =-1;
 		}
+        System.out.println("ProductController productDelete result-->"+result);
+		System.out.println("ProductController productDelete b->"+b);
+      
+        model.addAttribute("b", b);
+		model.addAttribute("p_code", product.getP_code());
+		model.addAttribute("p_size", product.getP_size());
+		
 		return "forward:productTable";
 	}
 	
