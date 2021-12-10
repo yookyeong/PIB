@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MemberDao">
+	<select id="selectMemberForLogin" resultType="Member">
+		SELECT *
+		  FROM MEMBER
+		 WHERE MEM_ID = #{mem_id}
+		   AND MEM_PASSWD = #{mem_passwd}
+	</select>
+	
+	<select id="memberListAll" parameterType="Member" resultType="Member">
+		SELECT *
+			FROM MEMBER
+			ORDER BY mem_no DESC
+	</select>
+	
+	<select id="userDetail" parameterType="int" resultType="Member">
+		SELECT *
+			FROM MEMBER
+		   WHERE MEM_NO = #{mem_no}
+	</select>
+	
+	<update id="update" parameterType="Member">
+		UPDATE member
+			SET mem_passwd=#{mem_passwd}, mem_tel=#{mem_tel}, mem_address1=#{mem_address1}, mem_address2=#{mem_address2}, mem_address3=#{mem_address3}
+		  WHERE mem_no=#{mem_no}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE 
+		   FROM member
+		  WHERE mem_no=#{mem_no}
+	</delete>
+	
+	<insert id="register" parameterType="Member" >
+		INSERT INTO member(mem_id, mem_passwd, mem_name, mem_tel, mem_email, mem_address1, mem_admin, mem_no, mem_address2, mem_address3)
+		   VALUES(#{mem_id}, #{mem_passwd}, #{mem_name}, #{mem_tel}, #{mem_email}, #{mem_address1}, 0
+		   , (SELECT NVL(MAX(MEM_NO), 0) + 1 FROM MEMBER)
+		   , #{mem_address2}, #{mem_address3})
+	</insert>
+	
+	<select id="idCheck" parameterType="java.lang.String" resultType="int">
+		SELECT COUNT(1) AS CNT
+		  FROM MEMBER
+		 WHERE MEM_ID = #{mem_id}
+	</select>
+	
+	<select id="findId" parameterType="Member" resultType="java.lang.String">
+		SELECT mem_id
+		  FROM MEMBER
+		 WHERE mem_name=#{mem_name}
+		   AND mem_email=#{mem_email}
+		   AND mem_tel=#{mem_tel}
+	</select>
+	
+	<select id="findPw" parameterType="Member" resultType="java.lang.String">
+		SELECT mem_passwd
+		  FROM MEMBER
+		 WHERE mem_name=#{mem_name}
+		   AND mem_id=#{mem_id}
+		   AND mem_email=#{mem_email}
+		   AND mem_tel=#{mem_tel}
+		   
+	</select>
+	
+	
+	
+	
+</mapper>

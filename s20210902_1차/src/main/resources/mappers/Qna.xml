@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="QnaDao">
+
+	<select id="crQnaSelectMcode" resultType="Qna">
+		SELECT mcode, content
+		FROM common
+        WHERE bcode = 300 AND mcode != 999
+	</select>
+	
+	<select id="crQnaListCnt" parameterType="Qna" resultType="int">
+		SELECT count(*)
+		FROM qna
+		WHERE mem_id = #{mem_id}
+	</select>
+	
+	<select id="crQnaClientList" parameterType="Qna" resultType="Qna">
+		SELECT * 
+		FROM (Select rownum rn, qc.* 
+     		  From (select q.*, c.content
+                    from  (select * from qna where mem_id = #{mem_id}) q , (SELECT * FROM common WHERE bcode =300) c
+                    where q.q_mcode = c.mcode
+     		  		order by q_num desc) qc)
+		WHERE rn between #{start} and #{end}
+	</select>
+	
+	<select id="crQnaSelectPcode" parameterType="Qna" resultType="java.lang.String">
+		select p_code from qna where q_num = #{q_num}
+	</select>
+	
+	<select id="crQnaClientContent" parameterType="Qna" resultType="Qna">
+		SELECT q.*, c.content, p.p_name, c2.content size_name
+        FROM  qna q , (SELECT * FROM common WHERE bcode =300) c, product p , (SELECT * FROM common WHERE bcode =100) c2
+        WHERE q.q_mcode = c.mcode
+        AND q.p_code = p.p_code
+        AND q.p_size = p.p_size
+        AND q.p_size = c2.mcode
+        AND mem_id = #{mem_id}
+        AND q_num = #{q_num}
+		ORDER BY q_num desc
+	</select>
+	
+	<select id="crQnaClientContentNull" parameterType="Qna" resultType="Qna">
+		SELECT q.*, c.content
+        FROM  qna q , (SELECT * FROM common WHERE bcode =300) c
+        WHERE q.q_mcode = c.mcode
+        AND mem_id = #{mem_id}
+        AND q_num = #{q_num}
+   		ORDER BY q_num desc
+	</select>
+	
+	<insert id="crQnaClientInsert" parameterType="Qna">
+		INSERT INTO qna (mem_id, q_num, p_code, p_size, q_content, q_image, q_date, q_mcode) 
+		VALUES (#{mem_id}, (select max(q_num)+1 from qna), #{p_code}, #{p_size}, #{q_content}, #{q_image}, sysdate, #{q_mcode})
+	</insert>
+	
+	<select id="crOrderList" parameterType="Order1" resultType="Order1">
+		select o.*, p.p_name, c.content
+		from order1 o, product p, common c
+		where o.p_code = p.p_code
+		and o.p_size = p.p_size
+		and o.p_size = c.mcode
+		and	mem_id =#{mem_id}
+	</select>
+	
+	<select id="crQnaMcodeList" resultType="Qna">
+		select mcode, content
+		from common
+        where bcode = 300 and mcode != 999
+	</select>
+	
+	<update id="crQnaClientUpdatePro" parameterType="Qna">
+		UPDATE qna SET p_code = #{p_code}, p_size = #{p_size}, 
+					   q_content = #{q_content}, q_image = #{q_image}, q_date = sysdate, q_mcode = #{q_mcode}
+		WHERE q_num = #{q_num}
+	</update>
+	
+	<select id="crAdminCheck" parameterType="java.lang.String" resultType="int">
+		SELECT mem_admine
+		FROM member
+		WHERE mem_id = #{mem_id}
+	</select>
+	
+	<select id="crQnaAdminListCnt" parameterType="qna" resultType="int">
+		SELECT count(*)
+		FROM qna 
+		WHERE q_re_status = #{q_re_status}
+	</select>
+	
+	<select id="crQnaAdminList" parameterType="Qna" resultType="Qna">
+		SELECT * 
+		FROM (Select rownum rn, qc.* 
+     		  From (select q.*, c.content
+                    from (select * from qna where q_re_status = #{q_re_status}) q,
+                    	 (SELECT * FROM common WHERE bcode =300) c
+                    where q.q_mcode = c.mcode
+     		  		order by q_num desc) qc)
+		WHERE rn between #{start} and #{end}
+	</select>
+</mapper>

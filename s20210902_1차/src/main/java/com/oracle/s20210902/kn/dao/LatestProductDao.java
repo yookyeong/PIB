@@ -1,0 +1,22 @@
+package com.oracle.s20210902.kn.dao;
+
+import java.util.List;
+
+import com.oracle.s20210902.model.LatestProduct;
+
+
+public interface LatestProductDao {
+	int total();	// Product Row 수
+	
+	int repSearchListTotal(String keyword);
+	
+	List<LatestProduct>listProSearch(LatestProduct latestProduct);
+	
+	int repListTotal(LatestProduct latestProduct);
+
+	List<LatestProduct> listLatestProduct(LatestProduct latestProduct);
+	
+
+
+	
+}

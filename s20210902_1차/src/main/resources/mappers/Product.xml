@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductDao">
+	<select id="bhProTotal"  resultType="int">
+		select count(*) from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price from product)
+	</select>
+	
+	<select id="bhProTotalP" parameterType="Product" resultType="int">
+	 	  select count(*) from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price 
+                      from product 
+                      where p_c_mcode = #{p_c_mcode}) 
+	 </select>
+	 
+	 <select id="bhProListAll" parameterType="Product" resultType="Product">
+	    <![CDATA[
+	         select * 
+	         from (select rownum rn, a.* 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price from product order by p_code) a
+	              ) 
+	    	 where rn >= #{start} 
+	    	 and   rn <= #{end}    
+	     ]]>	 
+     </select>
+     
+     <select id="bhProListAll1" parameterType="Product" resultType="Product">
+	    <![CDATA[
+	         select * 
+	         from (select rownum rn, a.* 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price from product order by p_hit desc) a
+	              ) 
+	    	 where rn >= #{start} 
+	    	 and   rn <= #{end}    
+	     ]]>	 
+     </select>
+     
+     <select id="bhProListAll2" parameterType="Product" resultType="Product">
+	    <![CDATA[
+	         select * 
+	         from (select rownum rn, a.* 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price from product order by p_date desc) a
+	              ) 
+	    	 where rn >= #{start} 
+	    	 and   rn <= #{end}    
+	     ]]>	 
+     </select>
+     
+     <select id="bhProListAll3" parameterType="Product" resultType="Product">
+	    <![CDATA[
+	         select * 
+	         from (select rownum rn, a.* 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price from product order by p_price desc) a
+	              ) 
+	    	 where rn >= #{start} 
+	    	 and   rn <= #{end}    
+	     ]]>	 
+     </select>
+     
+     <select id="bhProListAll4" parameterType="Product" resultType="Product">
+	    <![CDATA[
+	         select * 
+	         from (select rownum rn, a.* 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price from product order by p_price) a
+	              ) 
+	    	 where rn >= #{start} 
+	    	 and   rn <= #{end}    
+	     ]]>	 
+     </select>
+     
+     <select id="bhProListPart" parameterType="Product" resultType="Product">
+	    <![CDATA[
+	         select * 
+	         from (select rownum rn, a.* 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price 
+                         from product 
+                         where p_c_mcode = #{p_c_mcode} 
+                         order by p_code) a
+	              ) 
+	    	 where rn >= #{start} 
+	    	 and   rn <= #{end}    
+	     ]]>	 
+     </select>
+     
+     <select id="bhProSelOne" parameterType="int" resultType="Product">
+     	 select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price
+         from product
+         where p_code = #{p_code}
+     </select>
+	 
+	 <select id="bhProListPart4" resultType="Product">
+	 		<![CDATA[
+	         select * 
+	         from (select rownum rn, a.* 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price 
+         				 from product 
+                         where p_c_mcode = #{p_c_mcode}
+                         order by p_price) a
+                  )
+	    	 where rn >= #{start} 
+	    	 and   rn <= #{end}    
+	     ]]>	 
+	 </select>
+	 <select id="bhProListPart1" resultType="Product">
+	 		<![CDATA[
+	         select * 
+	         from (select rownum rn, a.* 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price 
+                         from product 
+                         where p_c_mcode = #{p_c_mcode}
+         				 order by p_date desc) a
+         		  )
+	    	 where rn >= #{start} 
+	    	 and   rn <= #{end}    
+	     ]]>	 
+	 </select>
+	 <select id="bhProListPart2" resultType="Product">
+	 		<![CDATA[
+	         select * 
+	         from (select rownum rn, a.* 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price 
+         				from product 
+       					where p_c_mcode = #{p_c_mcode}
+       				    order by p_hit desc) a
+       			  )
+	    	 where rn >= #{start} 
+	    	 and   rn <= #{end}    
+	     ]]>	 
+	 </select>
+	 <select id="bhProListPart3" resultType="Product">
+	 		<![CDATA[
+	         select * 
+	         from (select rownum rn, a.* 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price 
+         				 from product 
+         				 where p_c_mcode = #{p_c_mcode}
+         				 order by p_price desc) a
+         		  )
+	    	 where rn >= #{start} 
+	    	 and   rn <= #{end}    
+	     ]]>	 
+	 </select>
+</mapper>
+

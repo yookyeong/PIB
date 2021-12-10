@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LatestProductDao">
+	<select id="knListTotal" 		resultType="int">
+		select count(*) FROM product
+	</select>
+	
+	<select id="knSearchListTotal" 	parameterType="String"	resultType="int">
+		select count(*) FROM product
+		where upper(p_name) like '%' || upper(#{keyword}) || '%' 
+		and   p_size like '120'
+		order by p_code asc
+	</select>
+	
+	
+	<select id="knSearchListALL"	parameterType="Product"		resultType="latestproduct">
+		SELECT *			<!-- 대표 코드 협의 후 수정 할 것 -->
+		FROM
+  		 (
+ 		   Select rownum rn , a.*
+  		   From (	select * from product 
+					where upper(p_name) like '%' || upper(#{keyword}) || '%' 
+					and   p_size like '120' 
+  		         ) a
+ 		  )
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+	
+	
+	<select id="knRepListTotal" 	parameterType="String"	resultType="int">
+		select count(*) FROM product
+		where p_size like '120' 
+		order by p_code asc
+	</select>
+	
+	
+	<select id="knRepListALL"	parameterType="Product"		resultType="latestproduct">
+		SELECT *			<!-- 대표 코드 협의 후 수정 할 것 -->
+		FROM
+  		 (
+ 		   Select rownum rn , a.*
+  		   From (	select * from product 
+					where p_size like '120' 
+  		         ) a
+ 		  )
+		WHERE rn BETWEEN #{start} and #{end}
+	</select>
+	
+</mapper>

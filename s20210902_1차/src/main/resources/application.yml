@@ -1,0 +1,43 @@
+# http port set
+server:
+  port: 8585
+  
+# Oracle Connect
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/xe
+    username: S20210902
+    password: tiger    
+  # ORM JPA
+  jpa:
+    hibernate:
+      ddl-auto: none
+      
+  # 작성한 이메일을 이용하여 다른 사람들한테 메일을 보낼 수 있음
+  # G-mail Transfer
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: 
+    password: 
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable : true
+    
+
+  #view resolver(Templete ->JSP Use)
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+
+# Mybatis
+mybatis:
+  # dto Location
+  type-aliases-package: com.oracle.s20210902.model
+  # XML Location
+  config-location: classpath:configuration.xml
+  mapper-locations: classpath:mappers/*.xml

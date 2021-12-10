@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Order1Dao">
+	<insert id="dhOrderInsert1" parameterType="Order1">
+		 Insert into S20210902.ORDER1 (O_NUM,P_CODE,P_SIZE,MEM_ID,P_QTY,O_DATE,O_ADDRESS,O_CANCEL,O_ACCEPT,O_TEL) 
+		 values (ORDER1_SEQ.nextval,#{p_code},#{p_size},#{mem_id},#{c_qty},sysdate,#{o_address},0,#{o_accept},#{o_tel})
+		 <selectKey keyProperty="o_num" resultType="int" order="AFTER"> SELECT ORDER1_SEQ.CURRVAL FROM DUAL </selectKey>
+	</insert>
+	<insert id="dhOrderInsert2" parameterType="Order1">
+		 Insert into S20210902.ORDER1 (O_NUM,P_CODE,P_SIZE,MEM_ID,P_QTY,O_DATE,O_ADDRESS,O_CANCEL,O_ACCEPT,O_TEL) 
+		 values (#{o_num},#{p_code},#{p_size},#{mem_id},#{c_qty},sysdate ,#{o_address},0,#{o_accept},#{o_tel})
+	</insert>
+	<select id="dhSelectOne" resultType="int" parameterType="Order1">
+		select count(*) 
+		from Order1
+		where o_cancel = 0 or o_cancel = 1 or o_cancel = 2
+	</select>
+	<select id="dhOrderList" resultType="Order1" parameterType="Order1">
+		 select *
+		 from (select rownum rn, a.* from (select p.p_name, p.p_img, o.o_num, c.content, 
+     	       o.o_date, o.o_address, o.o_accept, o.o_tel, o.p_qty, p.p_price, p.p_price*o.p_qty sumValue, o.o_cancel, o.p_code, o.p_size 
+     	       from product p, order1 o, common c 
+      	       where mem_id = #{mem_id}
+     	       and p.p_size=o.p_size
+     	       and p.p_code=o.p_code
+     	       and o.p_size=c.mcode
+    	       order by o.o_date desc, o.o_num desc) a) 
+    	 where rn between #{start} and #{end}
+	</select>
+	<select id="dhUpdate" parameterType="Order1">
+		update order1
+        set o_cancel = 2
+        where o_num = #{o_num}
+        and p_size = #{p_size}
+        and p_code = #{p_code}
+	</select>
+	<select id="dhSelectOneM" resultType="int" parameterType="Order1">
+		select count(*) 
+		from Order1
+		where o_cancel = 0
+	</select>
+	<select id="dhSelectOneC" resultType="int" parameterType="Order1">
+		select count(*) 
+		from Order1
+		where o_cancel = 1
+	</select>
+	<select id="dhSelectOneQ" resultType="int" parameterType="Order1">
+		select count(*) 
+		from Order1
+		where o_num = #{q}
+	</select>
+	
+	<select id="dhOrderListManager" parameterType="Order1" resultType="Order1">
+	     select *
+		 from (select rownum rn, a.* from (select p.p_name, p.p_img, o.o_num, c.content, 
+     	       o.o_date, o.o_address, m.mem_name, o.o_accept, o.o_tel, o.p_qty, p.p_price, p.p_price*o.p_qty sumValue, o.o_cancel, p.p_code, p.p_size, m.mem_id
+		       from product p, order1 o, common c, member m
+		       where o.o_cancel = '0'
+		       and p.p_size=o.p_size
+		       and p.p_code=o.p_code
+		       and o.p_size=c.mcode
+		       and m.mem_id = o.mem_id
+    	       order by o.o_date desc, o.o_num desc) a) 
+    	 where rn between #{start} and #{end}
+	</select>
+	<select id="dhUpdateManager" parameterType="Order1">
+		update order1
+        set o_cancel = 1
+        where o_num = #{o_num}
+        and p_size = #{p_size}
+        and p_code = #{p_code}
+	</select>
+	<select id="dhUpdateQty" parameterType="Order1">
+	 	 update product p
+         set p.p_qty = (p.p_qty-#{p_qty})
+         where p_code = #{p_code} and p_size = #{p_size}
+	</select>
+	<select id="dhOrderListManagerC" parameterType="Order1" resultType="Order1">
+		 select *
+		 from (select rownum rn, a.* from (select p.p_name, p.p_img, o.o_num, c.content, 
+     	       o.o_date, o.o_address, m.mem_name, o.o_accept, o.o_tel, o.p_qty, p.p_price, p.p_price*o.p_qty sumValue, o.o_cancel, o.mem_id
+		       from product p, order1 o, common c, member m
+		       where o.o_cancel = '1'
+		       and p.p_size=o.p_size
+		       and p.p_code=o.p_code
+		       and o.p_size=c.mcode
+		       and m.mem_id = o.mem_id
+    	       order by o.o_date desc, o.o_num desc) a) 
+    	 where rn between #{start} and #{end}
+	</select>
+	<select id="dhQsearch" parameterType="Order1" resultType="Order1">
+		 select *
+		 from (select rownum rn, a.* from (select p.p_name, p.p_img, o.o_num, c.content, 
+     	       o.o_date, o.o_address, m.mem_name, o.o_accept, o.o_tel, o.p_qty, p.p_price, p.p_price*o.p_qty sumValue, o.o_cancel
+		       from product p, order1 o, common c, member m
+		       where o.o_cancel = '1'
+               and   o.o_num = #{q}
+		       and   p.p_size=o.p_size
+		       and   p.p_code=o.p_code
+		       and   o.p_size=c.mcode
+		       and   m.mem_id = o.mem_id
+    	       order by o.o_date desc, o.o_num desc) a) 
+    	 where rn between #{start} and #{end}
+	</select>
+	<select id="dhTotalCategory" parameterType="Order1" resultType="int">
+		select count(*) 
+		from Order1
+		where o_cancel = #{o_cancel}
+	</select>
+	<select id="dhOrder1CategoryList" parameterType="Order1" resultType="Order1">
+		 select *
+		 from (select rownum rn, a.* from (select p.p_name, p.p_img, o.o_num, c.content, 
+     	       o.o_date, o.o_address, o.o_accept, o.o_tel, o.p_qty, p.p_price, p.p_price*o.p_qty sumValue, o.o_cancel 
+     	       from product p, order1 o, common c 
+      	       where mem_id = #{mem_id}
+      	       and o_cancel = #{o_cancel}
+     	       and p.p_size=o.p_size
+     	       and p.p_code=o.p_code
+     	       and o.p_size=c.mcode
+    	       order by o.o_date desc, o.o_num desc) a) 
+    	 where rn between #{start} and #{end}
+	</select>
+	
+	<select id="dhSelectListDate" parameterType="Order1" resultType="Order1">
+		 select *
+		 from (select rownum rn, a.* from (select p.p_name, p.p_img, o.o_num, c.content, 
+     	       o.o_date, o.o_address, o.o_accept, o.o_tel, o.p_qty, p.p_price, p.p_price*o.p_qty sumValue, o.o_cancel 
+     	       from product p, order1 o, common c 
+      	       where mem_id = #{mem_id}
+     	       and p.p_size=o.p_size
+     	       and p.p_code=o.p_code
+     	       and o.p_size=c.mcode
+    	       order by o.o_date, o.o_num) a) 
+    	 where rn between #{start} and #{end}
+	</select>
+	<select id="dhOrderListManagerCDate" parameterType="Order1" resultType="Order1">
+		 select *
+		 from (select rownum rn, a.* from (select p.p_name, p.p_img, o.o_num, c.content, 
+     	       o.o_date, o.o_address, m.mem_name, o.o_accept, o.o_tel, o.p_qty, p.p_price, p.p_price*o.p_qty sumValue, o.o_cancel
+		       from product p, order1 o, common c, member m
+		       where o.o_cancel = '1'
+		       and p.p_size=o.p_size
+		       and p.p_code=o.p_code
+		       and o.p_size=c.mcode
+		       and m.mem_id = o.mem_id
+    	       order by o.o_date, o.o_num) a) 
+    	 where rn between #{start} and #{end}
+	</select>
+	<select id="dhOrderListMember" parameterType="java.lang.String" resultType="Member">
+		select mem_tel, mem_email
+		from member
+		where mem_id = #{mem_id}
+	</select>
+</mapper>

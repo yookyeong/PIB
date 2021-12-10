@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FaqDao">
+	<select id="crFaqTotalCnt" resultType="int">
+		select count(*) from faq
+	</select>
+	
+	<select id="crFaqListAll" parameterType="Faq" resultType="Faq">
+		SELECT * 
+		FROM (Select rownum rn, fc.* 
+     		  From (select f.*, c.content
+                    from  faq f , (SELECT * FROM common WHERE bcode =300) c
+                    where f.q_mcode = c.mcode
+     		  		order by f_num desc) fc)
+		WHERE rn between #{start} and #{end}
+	</select>
+	
+	<select id="crFaqPartCnt" resultType="int" parameterType="Faq">
+		select count(*) from faq where q_mcode = #{q_mcode}
+	</select>
+	
+	<select id="crFaqListPart" parameterType="Faq" resultType="Faq">
+		SELECT * 
+		FROM (Select rownum rn, fc.* 
+     		  From (select f.*, c.content
+                    from  faq f , (SELECT * FROM common WHERE bcode =300 and mcode = #{q_mcode}) c
+                    where f.q_mcode = c.mcode
+     		  		order by f_num desc) fc)
+		WHERE rn between #{start} and #{end}
+	</select>
+	
+	<select id="crFaqContent" parameterType="Faq" resultType="Faq">
+		select f.*, c.content 
+		from faq f, (select * from common 
+						where bcode = 300 
+						and mcode = (select q_mcode from faq where f_num = #{f_num})) c
+		where f_num = #{f_num}
+	</select>
+	
+	<select id="crFaqSelectMcode" resultType="Faq">
+		select mcode, content
+		from common
+        where bcode = 300 and mcode != 999
+	</select>
+	
+	<insert id="crFaqInsert" parameterType="Faq">
+		insert into faq(f_num, f_title, f_content, f_date, q_mcode)
+			values((select max(f_num)+1 from faq),#{f_title},#{f_content},sysdate,#{q_mcode})
+	</insert>
+	
+	<update id="crFaqUpdate" parameterType="Faq">
+		update faq set f_title = #{f_title}, f_content = #{f_content}, f_date = sysdate, q_mcode = #{q_mcode}
+		where f_num = #{f_num}
+	</update>
+	
+	<delete id="crFaqDelete" parameterType="Faq">
+		delete from faq where f_num = #{f_num}
+	</delete>
+</mapper>
