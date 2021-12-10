@@ -6,6 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+ var admin=${admin}
+ if (admin == 1){
+	 alert("관리자로 로그인 되었습니다");
+ }else{
+	 alert("관리자가 아닙니다.");
+	 location.href="login";
+ }
+</script>
 </head>
 <body>
 

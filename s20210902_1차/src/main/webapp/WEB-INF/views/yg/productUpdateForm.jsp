@@ -17,21 +17,20 @@
 </head>
 <body>
 	<h2>상품 수정</h2>
-	<form action="productUpdate" method="post">
+	<form action="productUpdate" method="post" enctype= "multipart/form-data">
 <!-- 	<input type="hidden" name="p_c_mcode" value="p_c_mcode">-->
-	<input type="hidden" name="p_size" value="${product.p_size }">
+		<input type="hidden" name="p_size" value="${product.p_size }">
 		<table>
 		
 			
 			<tr>
 				<th>상품코드</th>
 				<td><input type="text" name="p_code" required="required"
-					value=${product.p_code }></td>
+					value=${product.p_code } readonly/></td>
 			</tr>
 			<tr>
 				<th>상품명</th>
-				<td><input type="text" name="p_name" required="required" 
-				value=${product.p_name } > </td>
+				<td>${product.p_name } </td>
 			</tr>
 			<tr>
 				<tr>
@@ -63,13 +62,25 @@
 				<td><input type="text" name="p_price" required="required" value=${product.p_price }></td>
 			</tr>
 			<tr>
+			<th>상품이미지</th>
+			<td>
+				<input type="hidden" value="${product.p_img }" name="p_img">
+				<img alt="${product.p_img  }" src="${product.p_img  }" width="300px" height="300px">
+				
+			</td>
+			<td><input type="file" name="file1"></td>
+			</tr>
+			
+	
+		<div>
+			<tr>
 				<td><input type="submit" value="확인"></td>
 			</tr>
 			<tr>
 				<td><input type="button" value="목록"
 					onclick="location.href='productTable'"></td>
 			</tr>
-
+		</div>
 
 
 

@@ -77,7 +77,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public int productInsert(Product product) {
 		System.out.println("ProductDaoImpl productInsert Start.. ");
-		int result=0;
+		int result=-1;
 		try {
 			result=session.insert("productInsert", product);
 		} catch (Exception e) {

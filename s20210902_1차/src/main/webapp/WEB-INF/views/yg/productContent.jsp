@@ -7,14 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script type=delete......????>
- 			var result = "${result}";
-			if(result > 0)
-			alert("상품수정 완료.");
-			else if(result == -1)
-			alert("상품수정 실패.");
-			
-		</script>
+
 
 </head>
 <body>

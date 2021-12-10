@@ -8,19 +8,18 @@
 <title>Insert title here</title>
 <% String context = request.getContextPath(); %>
 	<script type="text/javascript">
-		var restult='${result}';
-		if(result < 0)
-			alert("상품등록 완료");
-	
 		
+		var result=${result};
+		if(result > 0)
+			alert("상품등록 완료");
+		if(result == -1 )
+			alert("상품등록 실패");
 
 			var result    = '${savedName}';
 			var delResult = '${delResult}';
 			parent.addFilePath(result);
 			
-			function addFilePath(msg) {
-			document.getElementById("form1").reset();
-			}
+		
 			
 			</script>
 			

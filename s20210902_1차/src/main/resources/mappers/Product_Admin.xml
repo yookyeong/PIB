@@ -60,13 +60,10 @@
 
 	</select>
 	<insert id="productInsert" parameterType="Product">
-	
 		insert into product
 		(p_code,p_size,p_name,p_c_bcode,p_c_mcode,p_qty,p_price,p_img)
 		values
 		(#{p_code},#{p_size},#{p_name},#{p_c_bcode},#{p_c_mcode},#{p_qty},#{p_price},#{p_img})
-		
-
 	</insert>
 
 	<select id="ygCateProductList1" resultType="Common">
@@ -89,7 +86,7 @@
 	<update id="ygproductUpdate" parameterType="Product">
 		update product
 		set
-		p_qty=#{p_qty}, p_price=#{p_price}
+		p_qty=#{p_qty}, p_price=#{p_price},p_img=#{p_img}
 		where p_code= #{p_code}
 		and p_size= #{p_size}
 	</update>
