@@ -53,6 +53,9 @@ public class Order1 {
 		// 장바구니
 		private int c_qty;
 		
+		//
+		private int c_num;
+		
 		
 		
 	

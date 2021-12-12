@@ -151,4 +151,9 @@
 		from member
 		where mem_id = #{mem_id}
 	</select>
+	<select id="dhRemove" parameterType="Order1">
+		DELETE FROM Cart
+		WHERE mem_id = #{mem_id}
+	</select>
+	
 </mapper>

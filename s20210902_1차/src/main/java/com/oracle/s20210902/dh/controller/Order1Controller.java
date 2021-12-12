@@ -36,34 +36,29 @@ public class Order1Controller {
 		return "dh/order1Write";
 	}
 	
+	
 	// 장바구니 이후에 주문을 위한 주문서 작성 페이지 이후 데이터 넘어옴	
 	@RequestMapping(value = "order1Insert", method=RequestMethod.POST)
 	public String order1Insert (Model model, Order1 order1, HttpServletRequest request) {
-		// 주소 받아서 dto에 넣음
 		System.out.println("Order1Controller Order1List() start...");
-		
-		// 임시 세션 아이디
-		order1.setMem_id("aaaa");
+		String mem_id = (String) request.getSession().getAttribute("mem_id");
+		order1.setMem_id(mem_id);
 		
 		int result = os.insert(order1, request);
+		System.out.println("order1Insert result!!!! -> " + result);
 		
-		return "dh/order1ListPro";
-	}
-	
-	// 주문이 완료되었다는 문구를 페이지에서 보여주고 list보여줌
-	@RequestMapping(value = "order1ListPro")
-	public String order1ListPro () {
-		System.out.println("Order1Controller Order1ListPro() start");
+		model.addAttribute("result" , result);
+		
 		return "dh/order1ListPro";
 	}
 	
 	// 테이블 조인 이후 list값으로 담아오고 화면에 뿌려줌
 	// 회원으로 로그인 했을 때, 내가 주문한 상품들 리스트
 	@RequestMapping(value = "order1List")
-	public String order1List(Model model, String currentPage, Order1 order1) {
+	public String order1List(Model model, String currentPage, Order1 order1, HttpServletRequest request) {
 		System.out.println("Order1Controller Order1List() start...");
-		// 임시 세션 아이디
-		order1.setMem_id("aaaa");
+		String mem_id = (String) request.getSession().getAttribute("mem_id");
+		order1.setMem_id(mem_id);
 		
 		int total = os.total(order1);								// DB에 전체 데이터 개수
 		System.out.println("Order1Controller total->"+total);
@@ -74,6 +69,8 @@ public class Order1Controller {
 		order1.setStart(pg.getStart());								// DB상에서 시작 rn값
 		order1.setEnd(pg.getEnd());									// DB상에서 끝 rn값
 		
+		
+		int result = os.remove(order1);
 		List<Order1> order1List = os.listOrder(order1);				// Order1 테이블의 값들을 list에 담아서 가져옴
 		System.out.println("Order1Controller order1List ->"+order1List);
 		
@@ -93,10 +90,10 @@ public class Order1Controller {
 	
 	// 주문상태에 따른 결과값
 	@RequestMapping(value = "order1ListCategory")
-	public String order1ListCategory(Order1 order1, String currentPage, Model model, String o_cancel) {
+	public String order1ListCategory(Order1 order1, String currentPage, Model model, String o_cancel, HttpServletRequest request) {
 		System.out.println("Order1Controller order1ListCategory() start...");
-		// 임시 세션 아이디
-		order1.setMem_id("aaaa");
+		String mem_id = (String) request.getSession().getAttribute("mem_id");
+		order1.setMem_id(mem_id);
 		int o_cancel1 = Integer.parseInt(o_cancel);
 		order1.setO_cancel(o_cancel1);
 		
@@ -114,11 +111,10 @@ public class Order1Controller {
 	
 	// 등록일 가장 오래된 순
 	@RequestMapping(value = "order1Date")
-	public String order1Date (Model model, String currentPage, Order1 order1) {
+	public String order1Date (Model model, String currentPage, Order1 order1, HttpServletRequest request) {
 		System.out.println("Order1Controller Order1List() start...");
-		
-		// 임시 세션 아이디
-		order1.setMem_id("aaaa");
+		String mem_id = (String) request.getSession().getAttribute("mem_id");
+		order1.setMem_id(mem_id);
 		
 		int total = os.total(order1);									// DB에 전체 데이터 개수
 		System.out.println("Order1Controller total->"+total);

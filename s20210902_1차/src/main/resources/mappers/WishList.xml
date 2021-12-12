@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WishListDao">
+<insert id="dhInsertWishList" parameterType="WishList">
+	insert into WISHLIST(mem_id, w_num, p_code) VALUES(#{mem_id}, WISHLIST_SEQ.nextval, #{p_code})
+</insert>
+<select id="dhSelectOneWishList" parameterType="WishList" resultType="int">
+	select count(*) 
+	from WISHLIST
+	where mem_id = #{mem_id}
+</select>
+<select id="dhListWishList" parameterType="WishList" resultType="WishList">
+		  select *
+		 from (select rownum rn, a.* from (select DISTINCT p.p_name, p.p_img, p.p_price, w.p_code, w.w_num
+     	       from product p, WishList w
+      	       where mem_id = #{mem_id}
+     	       and p.p_code=w.p_code
+    	       order by w.w_num desc) a) 
+    	 where rn between #{start} and #{end}
+</select>
+<select id="dhDeleteWishList">
+	DELETE FROM WISHLIST
+	WHERE mem_id = #{mem_id} and p_code = #{p_code} and w_num = #{w_num}
+</select>
+</mapper>

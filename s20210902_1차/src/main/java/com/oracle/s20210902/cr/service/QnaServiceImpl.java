@@ -92,5 +92,26 @@ public class QnaServiceImpl implements QnaService {
 		int total = qd.qnaAdminListCnt(qna);
 		return total;
 	}
+
+	@Override
+	public int qnaAdminReply(Qna qna) {
+		System.out.println("QnaServiceImpl qnaAdminReply Start...");
+		int result = qd.qnaAdminReply(qna);
+		return result;
+	}
+
+	@Override
+	public int qnaAdminReadContent(Qna qna) {
+		System.out.println("QnaServiceImpl qnaAdminReadContent Start...");
+		int result = qd.qnaAdminReadContent(qna);
+		return result;
+	}
+
+	@Override
+	public int qnaReplyStatusCheck(Qna qna) {
+		System.out.println("QnaServiceImpl qnaReplyStatusCheck Start...");
+		int reStatus = qd.qnaReplyStatusCheck(qna);
+		return reStatus;
+	}
 	
 }

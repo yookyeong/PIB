@@ -2,6 +2,8 @@ package com.oracle.s20210902.dh.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +25,10 @@ private static final Logger logger = LoggerFactory.getLogger(Order1Controller.cl
 	
 	// 관리자 계정 로그인 시 나오게 되는 주문 list
 	@RequestMapping(value = "order1ListManager")
-	public String order1ListManager(Model model, String currentPage, Order1 order1) {
+	public String order1ListManager(Model model, String currentPage, Order1 order1, HttpServletRequest request) {
 		System.out.println("Order1Controller Order1ListManager() start...");
-		
-		// 임시세션아이디
-		order1.setMem_id("admin");
+		String mem_id = (String) request.getSession().getAttribute("mem_id");
+		order1.setMem_id(mem_id);
 		
 		int total = os.total(order1);
 		Order1Paging pg = new Order1Paging(total, currentPage);			// 총 데이터 개수, 현재페이지 가져옴
@@ -59,10 +60,10 @@ private static final Logger logger = LoggerFactory.getLogger(Order1Controller.cl
 
 	// 관리자 계정으로 로그인 시, 확정처리된 주문을 보여주는 list
 	@RequestMapping(value = "order1ListManagerC")
-	public String order1ListManagerC (Model model, String currentPage, Order1 order1) {
+	public String order1ListManagerC (Model model, String currentPage, Order1 order1, HttpServletRequest request) {
 		System.out.println("Order1Controller Order1ListManagerC() start...");
-		// 임시세션아이디
-		order1.setMem_id("admin");
+		String mem_id = (String) request.getSession().getAttribute("mem_id");
+		order1.setMem_id(mem_id);
 		
 		int total = os.totalC(order1);
 		System.out.println("order1ListManagerC total -> " + total);
@@ -106,10 +107,11 @@ private static final Logger logger = LoggerFactory.getLogger(Order1Controller.cl
 	
 	//  order1ListManagerC 에서 늦은 주문순으로 정렬
 	@RequestMapping(value = "order1DateManagerC")
-	public String order1DateManagerC(Model model, String currentPage, Order1 order1) {
+	public String order1DateManagerC(Model model, String currentPage, Order1 order1, HttpServletRequest request) {
 		System.out.println("Order1Controller order1DateManagerC() start...");
-		// 임시세션아이디
-		order1.setMem_id("admin");
+		String mem_id = (String) request.getSession().getAttribute("mem_id");
+		order1.setMem_id(mem_id);
+		
 		order1.setO_cancel(1);
 		int total = os.total(order1);
 		Order1Paging pg = new Order1Paging(total, currentPage);		// 총 데이터 개수, 현재페이지 가져옴

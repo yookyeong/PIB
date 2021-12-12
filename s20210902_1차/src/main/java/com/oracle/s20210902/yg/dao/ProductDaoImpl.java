@@ -102,7 +102,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public int productDelete(Product product) {
 		System.out.println("ProductDaoImpl productDelete Start..");
-		int result=-1;
+		int result=0;
 		
 		try {
 			result=session.delete("productDelete",product);

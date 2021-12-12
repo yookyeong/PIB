@@ -35,7 +35,6 @@
         AND q.p_code = p.p_code
         AND q.p_size = p.p_size
         AND q.p_size = c2.mcode
-        AND mem_id = #{mem_id}
         AND q_num = #{q_num}
 		ORDER BY q_num desc
 	</select>
@@ -55,7 +54,7 @@
 	</insert>
 	
 	<select id="crOrderList" parameterType="Order1" resultType="Order1">
-		select o.*, p.p_name, c.content
+		select o.*, p.p_img, p.p_name, c.content
 		from order1 o, product p, common c
 		where o.p_code = p.p_code
 		and o.p_size = p.p_size
@@ -76,7 +75,7 @@
 	</update>
 	
 	<select id="crAdminCheck" parameterType="java.lang.String" resultType="int">
-		SELECT mem_admine
+		SELECT mem_admin
 		FROM member
 		WHERE mem_id = #{mem_id}
 	</select>
@@ -97,4 +96,20 @@
      		  		order by q_num desc) qc)
 		WHERE rn between #{start} and #{end}
 	</select>
+	
+	<update id="crQnaAdminReply" parameterType="Qna">
+		UPDATE qna SET q_reply = #{q_reply}, q_re_status = 2
+		WHERE q_num = ${q_num}
+	</update>
+	
+	<select id="crQnaReplyStatusCheck" parameterType="Qna" resultType="int">
+		SELECT q_re_status
+		FROM qna
+		WHERE q_num = #{q_num}
+	</select>
+	
+	<update id="crQnaAdminReadContent" parameterType="Qna">
+		UPDATE qna SET q_re_status = 1
+		WHERE q_num = ${q_num}
+	</update>
 </mapper>

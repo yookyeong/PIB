@@ -23,4 +23,8 @@ public interface MemberService {
 	String findId(Member member);
 
 	String findPw(Member member);
+
+	int managerDelete(Member member);
+
+	int managerRestore(Member member);
 }

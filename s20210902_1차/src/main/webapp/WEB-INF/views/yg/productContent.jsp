@@ -6,14 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
- 			var a = ${a};
- 			if(a > 0)
-				alert("상품수정 완료.");
- 			if(a == -1 )
-				alert("상품수정 실패.");
-			
-		</script>
+
+
 
 </head>
 <body>

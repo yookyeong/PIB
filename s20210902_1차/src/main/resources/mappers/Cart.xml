@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CartDao">
+<insert id="dhInsertCart" parameterType="Cart">
+	insert into CART VALUES (#{mem_id}, Cart_SEQ.nextval, #{p_code}, #{p_size}, #{c_qty})
+</insert>
+<select id="dhSelectCart" parameterType="Cart" resultType="int">
+	select count(*) 
+	from cart
+	where mem_id = #{mem_id}
+</select>
+<select id="dhListCart" parameterType="Cart" resultType="Cart">
+	select *
+	from (select rownum rn, a.* from (select p.p_name, p.p_img, c.content, c1.c_qty, p.p_price, p.p_price*c1.c_qty sumValue, p.p_code, p.p_size, c1.c_num
+     	  from product p, cart c1, common c 
+      	  where mem_id = #{mem_id}
+     	  and p.p_size = c1.p_size
+     	  and p.p_code = c1.p_code
+     	  and c1.p_size = c.mcode
+    	  order by c1.c_num desc) a) 
+    	  where rn between #{start} and #{end}
+</select>
+<select id="dhDeleteCart" parameterType="Cart" resultType="int">
+	DELETE FROM Cart
+	WHERE mem_id = #{mem_id} and c_num = #{c_num}
+</select>
+</mapper>

@@ -25,6 +25,13 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    
+    <script type="text/javascript">
+    	function productDetailPage(pcode){
+    		location.href="bhDetail?p_code="+pcode;
+    	}
+    
+    </script>
 </head>
 
 <body>
@@ -72,10 +79,24 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="#">Sign in</a>
-                                <a href="#">Customer Service</a>
+                            <c:choose>
+                            <c:when test="${mem_id == null }">
+                                <a href="cm/register">회원가입</a>
+                                <a href="cm/loginForm">로그인</a>
+                            </c:when>
+                            <c:when test="${mem_id != null && mem_admin == 0}">
+                                <span style="color: white; padding-right: 20px;">${mem_id }님</span>
+                                <a href="cm/logout">로그아웃</a>
+                                <a href="myPageForm">마이페이지</a>
+                            </c:when>
+                            <c:when test="${mem_admin == 1 }">
+                            	<span style="color: white; padding-right: 20px;">${mem_id }님</span>
+                                <a href="cm/logout">로그아웃</a>
+                                <a href="adminPageForm">관리자페이지</a>
+                            </c:when>
+                            </c:choose>
+                                <a href="faqListAll">고객센터</a>
                             </div>
-                      
                         </div>
                     </div>
                 </div>
@@ -85,34 +106,32 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="home"><img src="img/logo.JPG" alt="" width="150px" height="70px"></a>
+                        <a href="home"><img src="img/PIB_logo.png" alt="" width="120px" height="50px"></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="home">Home</a></li>
-                            <li><a href="#">Men</a></li>
-                            <li><a href="#">Women</a>
-                                <ul class="dropdown">
-                                    <!-- <li><a href="./about.html">About Us</a></li>
+                            <li><a href="bhPro">All</a></li>
+                            <li><a href="bhProT">Tops</a></li>
+                            <li><a href="bhProB">Trousers</a></li>
+                            <li><a href="bhProA">Accessories</a></li>
+                            <li><a href="bhProS">Shoes</a></li>
+                            <!-- <ul class="dropdown">
+                                    <li><a href="./about.html">About Us</a></li>
                                     <li><a href="./shop-details.html">Shop Details</a></li>
                                     <li><a href="./shopping-cart.html">Shopping Cart</a></li>
                                     <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li> -->
-                                </ul>
-                            </li>
-                            <li><a href="#">Items</a></li>
-                            <li><a href="#">Shoes</a></li>
+                                    <li><a href="./blog-details.html">Blog Details</a></li> 
+                                </ul> -->
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <a href="proSearch" class="search-switch"><img src="img/icon/search.png" alt=""></a>
+                        <a href="wishList"><img src="img/icon/heart.png" alt=""></a>
+                        <a href="cartList"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
                     </div>
                 </div>
             </div>
@@ -129,11 +148,58 @@
                     <div class="row">
                         <div class="col-xl-5 col-lg-7 col-md-8">
                             <div class="hero__text">
-                                <h6>Summer Collection</h6>
-                                <h2>Fall - Winter Collections 2030</h2>
-                                <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                commitment to exceptional quality.</p>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                <h2>PIB TOPS</h2>
+                                <p>Providing incomparable beauty through our PIB Tops.
+								   No matter the weather, no matter the condition. 
+								   Cool in the heat and warm in the cold.
+								   Our tops were made to give our customers the best performance possible.
+								</p>
+                                <a href="bhProT" class="primary-btn">Shop now<span class="arrow_right"></span></a>
+                                <div class="hero__social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-7 col-md-8">
+                            <div class="hero__text">
+                                <h2>PIB TROUSERS</h2>
+                                <p>Providing incomparable beauty through our PIB Trousers.
+								   This is where our company started.
+								   This itself shows how proud we are of our trousers. 
+								   We assure you this will be your best experience.
+								</p>
+                                <a href="bhProB" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                <div class="hero__social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-7 col-md-8">
+                            <div class="hero__text">
+                                <h2>PIB ACCESSORIES</h2>
+                                <p>Providing incomparable beauty through our PIB Accessories.
+								   We picked the essential accessories to give a boost to the fashion.
+								   It matches the other clothing and shoes to give a neat dark look.
+								</p>
+                                <a href="bhProA" class="primary-btn">Shop now <span class="arrow_right"></span></a>
                                 <div class="hero__social">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
                                     <a href="#"><i class="fa fa-twitter"></i></a>
@@ -150,11 +216,12 @@
                     <div class="row">
                         <div class="col-xl-5 col-lg-7 col-md-8">
                             <div class="hero__text">
-                                <h6>Summer Collection</h6>
-                                <h2>Fall - Winter Collections 2030</h2>
-                                <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                commitment to exceptional quality.</p>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                <h2>PIB SHOES</h2>
+                                <p>Providing incomparable beauty through our PIB Shoes.
+								   Comfort was the key factor in when making our shoes so that our customers can enjoy their activity anytime, anywhere.
+								   Gives a neat dark look to any who combine our products together with the shoes.
+								</p>
+                                <a href="bhProS" class="primary-btn">Shop now <span class="arrow_right"></span></a>
                                 <div class="hero__social">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
                                     <a href="#"><i class="fa fa-twitter"></i></a>
@@ -168,99 +235,54 @@
             </div>
         </div>
     </section>
+    <Br>
+    <br>
     <!-- Hero Section End -->
 
-    <!-- Banner Section Begin -->
-    <section class="banner spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 offset-lg-4">
-                    <div class="banner__item">
-                        <div class="banner__item__pic">
-                            <img src="img/banner/banner-1.jpg" alt="">
-                        </div>
-                        <div class="banner__item__text">
-                            <h2>Clothing Collections 2030</h2>
-                            <a href="#">Shop now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="banner__item banner__item--middle">
-                        <div class="banner__item__pic">
-                            <img src="img/banner/banner-2.jpg" alt="">
-                        </div>
-                        <div class="banner__item__text">
-                            <h2>Accessories</h2>
-                            <a href="#">Shop now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="banner__item banner__item--last">
-                        <div class="banner__item__pic">
-                            <img src="img/banner/banner-3.jpg" alt="">
-                        </div>
-                        <div class="banner__item__text">
-                            <h2>Shoes Spring 2030</h2>
-                            <a href="#">Shop now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Banner Section End -->
-
     <!-- Product Section Begin -->
+    <p></p>
     <section class="product spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="filter__controls">
-                        <li class="active" data-filter="*">Best Sellers</li>
+                        <li class="active" data-filter=".best-seller">Best Sellers</li>
                         <li data-filter=".new-arrivals">New Arrivals</li>
-                        <li data-filter=".hot-sales">Hot Sales</li>
                     </ul>
                 </div>
             </div>
             <div class="row product__filter">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+             <c:forEach var="proList" items="${productList}">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix best-seller">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-1.jpg">
-                            <span class="label">New</span>
+                    	<div class="product__item__pic set-bg" data-setbg="${proList.p_img }" onclick="productDetailPage(${proList.p_code})">
                             <ul class="product__hover">
-                                <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
+                                <li><a href="wishList"><img src="img/icon/heart.png" alt=""></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6>Piqué Biker Jacket</h6>
-                            <a href="#" class="add-cart">+ Add To Cart</a>
-                            <div class="rating">
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                                <i class="fa fa-star-o"></i>
-                            </div>
-                            <h5>$67.24</h5>
-                            <div class="product__color__select">
-                                <label for="pc-1">
-                                    <input type="radio" id="pc-1">
-                                </label>
-                                <label class="active black" for="pc-2">
-                                    <input type="radio" id="pc-2">
-                                </label>
-                                <label class="grey" for="pc-3">
-                                    <input type="radio" id="pc-3">
-                                </label>
-                            </div>
+                            <h5>${proList.p_name }</h5>
+                            <h7>${proList.p_price }원</h7>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
+                </div> 
+               </c:forEach>
+               <c:forEach var="proList2" items="${productList2}">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+                    <div class="product__item">
+                    	<div class="product__item__pic set-bg" data-setbg="${proList2.p_img }" onclick="productDetailPage(${proList2.p_code})">
+                            <ul class="product__hover">
+                                <li><a href="wishList"><img src="img/icon/heart.png" alt=""></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h5>${proList2.p_name }</h5>
+                            <h7>${proList2.p_price }원</h7>
+                        </div>
+                    </div>
+                </div> 
+               </c:forEach>
+<!--                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales">
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg">
                             <ul class="product__hover">
@@ -499,7 +521,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
@@ -508,52 +530,7 @@
 
 
     
-    <!-- Latest Blog Section Begin -->
-    <section class="latest spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <span>Latest News</span>
-                        <h2>Fashion New Trends</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-1.jpg"></div>
-                        <div class="blog__item__text">
-                            <span><img src="img/icon/calendar.png" alt=""> 16 February 2020</span>
-                            <h5>What Curling Irons Are The Best Ones</h5>
-                            <a href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-2.jpg"></div>
-                        <div class="blog__item__text">
-                            <span><img src="img/icon/calendar.png" alt=""> 21 February 2020</span>
-                            <h5>Eternity Bands Do Last Forever</h5>
-                            <a href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="img/blog/blog-3.jpg"></div>
-                        <div class="blog__item__text">
-                            <span><img src="img/icon/calendar.png" alt=""> 28 February 2020</span>
-                            <h5>The Health Benefits Of Sunglasses</h5>
-                            <a href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Latest Blog Section End -->
+    
 
     <!-- Footer Section Begin -->
     <footer class="footer">
@@ -562,43 +539,45 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                            <a href="home"><img src="img/PIB_logo_white1.png" alt=""></a>
                         </div>
-                        <p>The customer is at the heart of our unique business model, which includes design.</p>
-                        <a href="#"><img src="img/payment.png" alt=""></a>
+                        <p>Providing Incomparable Beauty</p>
+                        <img src="img/payment.png" alt="">
                     </div>
                 </div>
                 <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
                     <div class="footer__widget">
                         <h6>Shopping</h6>
                         <ul>
-                            <li><a href="#">Clothing Store</a></li>
-                            <li><a href="#">Trending Shoes</a></li>
-                            <li><a href="#">Accessories</a></li>
-                            <li><a href="#">Sale</a></li>
+                        	<li><a href="bhPro">All</a></li>
+                            <li><a href="bhProT">Top</a></li>
+                            <li><a href="bhProB">Trousers</a></li>
+                            <li><a href="bhProA">Accessories</a></li>
+                            <li><a href="bhProS">Shoes</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6">
                     <div class="footer__widget">
-                        <h6>Shopping</h6>
+                        <h6>Service Center</h6>
                         <ul>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Delivary</a></li>
-                            <li><a href="#">Return & Exchanges</a></li>
+                            <li><a href="faqListAll">FAQ</a></li>
+                            <li><a href="noticeList">NOTICE</a></li>
+
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
                     <div class="footer__widget">
-                        <h6>NewLetter</h6>
+                        <h6>PIB - People In Black</h6>
                         <div class="footer__newslatter">
-                            <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                            <form action="#">
+                            <p>Motivated and inspired by the Hollywood blockbuster movie Men In Black, 
+								the goal of our company is to provide simplicity and equality to each and every one of our customers.
+								Our website was made by Group2 who were first assembled in "Choongang Institute".</p>
+                            <!-- <form action="#">
                                 <input type="text" placeholder="Your email">
                                 <button type="submit"><span class="icon_mail_alt"></span></button>
-                            </form>
+                            </form> -->
                         </div>
                     </div>
                 </div>
@@ -627,7 +606,7 @@
         <div class="h-100 d-flex align-items-center justify-content-center">
             <div class="search-close-switch">+</div>
             <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
+                <input type="text" id="search-input" name="keyword" placeholder="Search here.....">
             </form>
         </div>
     </div>

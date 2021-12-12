@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.oracle.s20210902.jy.service.MemberService;
 import com.oracle.s20210902.model.Member;
 
-@Controller
+
 public class MemberController {
 	
 	@Autowired

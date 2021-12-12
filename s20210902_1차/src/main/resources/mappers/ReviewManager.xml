@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReviewDao">
+<select id="dhselectOneReview" parameterType="Review" resultType="Review">
+	select r_num, re_indent, re_step, reply
+	from review
+	where r_num = #{r_num}
+</select>
+<update id="dhUpdateReview" parameterType="Review">
+	<![CDATA[
+	update review set re_Step = re_Step+1 where reply = #{reply} and re_Step > #{re_step}
+	 ]]>
+</update>
+<insert id="dhInsertReview" parameterType="Review">
+	insert into review (r_num, p_code, p_size, mem_id, r_content, reply, re_step, re_indent)
+	values ((select max(r_num)+1 from review), #{p_code}, #{p_size}, #{mem_id}, #{r_content}, #{reply}, #{re_step}+1,#{re_indent}+1)
+</insert>
+<delete id="dhDeleteReply" parameterType="Review">
+	DELETE FROM review
+	WHERE r_num = #{r_num}
+	 and p_code = #{p_code} 
+	 and p_size = #{p_size}
+</delete>
+</mapper>

@@ -104,4 +104,14 @@ public class MemberDaoImpl implements MemberDao {
 	public String findPw(Member member) {
 		return session.selectOne("findPw", member);
 	}
+
+	@Override
+	public int managerDelete(Member member) {
+		return session.update("managerDelete", member);
+	}
+
+	@Override
+	public int managerRestore(Member member) {
+		return session.update("managerRestore", member);
+	}
 }

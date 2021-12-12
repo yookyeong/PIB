@@ -15,7 +15,6 @@ A:hover {text-decoration:none; color: #646464;}
 </head>
 <body>
 <h2>내가 주문한 내역</h2>
-<c:set var="num" value="${pg.total-pg.start+1}"></c:set>
 	<form action="order1ListCategory?currentPage=${pg.currentPage}" method="post">
 		주문상태 :	<select name='o_cancel' required="required">
 					<option value='' selected>-선택-</option>
@@ -33,6 +32,7 @@ A:hover {text-decoration:none; color: #646464;}
 			<th>주문번호</th><th>받으시는 분</th><th>받으시는 분 연락처</th><th>받으시는 분 주소</th><th>수량</th><th>금액</th><th>주문상태</th>
 		</tr>
 	</thead>
+	<c:if test="${total > 0 }">
 	<c:forEach var="order1" items="${order1ListDate }">
 	<tbody>
 		<tr>
@@ -68,8 +68,13 @@ A:hover {text-decoration:none; color: #646464;}
 				</c:choose></td>
 		</tr>
 	</tbody>
-	<c:set var="num" value="${num - 1 }"></c:set>
 	</c:forEach>
+	</c:if>
+	<c:if test="${total == 0 }">
+		<tr>
+			<td>주문하신 상품이 없습니다</td>
+		</tr>
+	</c:if>
 </table>
 <div>
 <c:if test="${pg.startPage > pg.pageBlock }">

@@ -23,6 +23,8 @@ public interface Order1Service {
 	
 	List<Order1> listOrderDate(Order1 order1);
 	
+	int remove(Order1 order1);
+	
 	
 	// 관리자	
 	int updateManager(Order1 order1);
@@ -39,6 +41,8 @@ public interface Order1Service {
 	
 	// 회원 아작스
 	Member selectMem(String mem_id);
+
+
 
 
 	

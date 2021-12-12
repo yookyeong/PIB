@@ -26,7 +26,7 @@ public class Order1ServiceImpl implements Order1Service {
 		int result = 0;
 		// 반복값
 		String [] p_code = request.getParameterValues("p_code");
-		System.out.println(p_code.length);
+		System.out.println("p_code.length ->>>>>>>>" + p_code.length);
 		String [] p_size = request.getParameterValues("p_size");
 		String [] c_qty = request.getParameterValues("c_qty");
 		// 주소
@@ -43,12 +43,16 @@ public class Order1ServiceImpl implements Order1Service {
 		 for(int i=0; i<p_code.length; i++){
 			 order1.setP_code(Integer.parseInt(p_code[i]));
 			 System.out.println("order1.getP_code"+order1.getP_code());
+			 
 			 order1.setP_size(Integer.parseInt(p_size[i]));
 			 order1.setC_qty(Integer.parseInt(c_qty[i]));
+			 
 			 order1.setO_accept(o_accept);
 			 System.out.println("order1.getO_accept()"+order1.getO_accept());
+			 
 			 order1.setO_address(o_address);
 			 System.out.println("order1.getO_address()"+order1.getO_address());
+			 
 			 order1.setO_tel(o_tel);
 				 
 			 result = od.insert(order1, request, i);
@@ -177,5 +181,13 @@ public class Order1ServiceImpl implements Order1Service {
 		System.out.println("Order1ServiceImpl selectMem() start");
 		Member member = od.selectMem(mem_id);
 		return member;
+	}
+
+	@Override
+	public int remove(Order1 order1) {
+		System.out.println("Order1ServiceImpl remove() start...");
+		int result = od.remove(order1);
+		System.out.println("Order1ServiceImpl result->"+result);
+		return result;
 	}
 }

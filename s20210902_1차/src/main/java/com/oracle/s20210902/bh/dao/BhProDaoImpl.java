@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.oracle.s20210902.model.Order1;
 import com.oracle.s20210902.model.Product;
 import com.oracle.s20210902.model.Review;
 
@@ -80,8 +81,100 @@ public class BhProDaoImpl implements BhProDao{
 
 	@Override
 	public int bhReviewWrite(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result = session.insert("bhInsertRev", review);
+			System.out.println("BhProDaoImpl bhReviewWrite result->" + result);
+		} catch (Exception e) {
+			System.out.println("BhProDaoImpl bhReviewWrite Exception->" + e.getMessage());
+		}
+		return result;
+	}
+
+	@Override
+	public List<Order1> bhProExist(Order1 order) {
+		List<Order1> ordered = null;
+		try {
+			ordered = session.selectList("bhExist", order);
+			System.out.println("BhProDaoImpl bhProExist ordered.getP_size()->" + ordered.size());
+		} catch (Exception e) {
+			System.out.println("BhProDaoImpl bhProExist Exception->" + e.getMessage());
+		}
+		return ordered;
+	}
+
+	@Override
+	public int total(Review review) {
+		int tot = 0;
+		System.out.println("BhProDaoImpl total Start ..." );
+		try {
+			tot = session.selectOne("bhRevTotal", review);
+		} catch (Exception e) {
+			System.out.println("BhProDaoImpl total Exception->"+e.getMessage());
+		}
+		
+		return tot;
+	}
+
+	@Override
+	public List<Review> listRev(Review review) {
+		List<Review> bhRev = null;
+		System.out.println("BhProDaoImpl listRev Start ..." );
+		try {
+			bhRev = session.selectList("bhRevList", review);
+		} catch (Exception e) {
+			System.out.println("BhProDaoImpl bhRevTotalRev Exception->" + e.getMessage());
+		}
+		return bhRev;
+	}
+
+	@Override
+	public int insertRev(Review review) {
+		int result = 0;
+		System.out.println("BhProDaoImpl insertRev Start ..." );
+		try {
+			result = session.insert("bhInsertReview", review);
+		} catch (Exception e) {
+			System.out.println("BhProDaoImpl insertRev Exception->"+e.getMessage());
+		}
+		return result;
+	}
+
+	@Override
+	public int updateRev(Review review) {
+		System.out.println("BhProDaoImpl updateRev Start...");
+		int up = 0;
+		try {
+			up = session.update("bhUpdateReview", review);
+		} catch (Exception e) {
+			System.out.println("BhProDaoImpl updateRev Exception->"+e.getMessage());
+		}
+		return up;
+	}
+
+	@Override
+	public int deleteRev(Review review) {
+		System.out.println("BhProDaoImpl deleteRev Start...");
+		int result = 0;
+		try {
+			result = session.delete("bhDeleteReview", review);
+			System.out.println("BhProDaoImpl deleteRev result->"+ result);
+		} catch (Exception e) {
+			System.out.println("BhProDaoImpl deleteRev Exception->"+ e.getMessage());
+		}
+		return result;
+	}
+
+	@Override
+	public Review selectRevGet(Review review) {
+		Review reviewGet = null;
+		try {
+			reviewGet = session.selectOne("bhSelectRevUp", review);
+			System.out.println("BhProDaoImpl selectRevGet reviewGet.getR_num()->" + reviewGet.getR_num());
+		} catch (Exception e) {
+			System.out.println("BhProDaoImpl selectRevGet Exception->"+ e.getMessage());
+		}
+		return reviewGet;
 	}
 
 	/*
@@ -95,6 +188,5 @@ public class BhProDaoImpl implements BhProDao{
 	 * System.out.println("BhProDaoImpl bhSortList Exception->" + e.getMessage()); }
 	 * return bhSortList; }
 	 */
-
 
 }

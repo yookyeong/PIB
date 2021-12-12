@@ -41,11 +41,12 @@
 				dataType : 'json',				/* dataType, success 응답 후 정보 */
 				success : function(data){
 					var jsondata = JSON.stringify(data);
+					var index = 0;
 					$(data).each(
 						function() {
-							str += "<input type='radio' name='p_product' value1='"+this.p_code+"' value2='"+this.p_size+"'>"
-										+this.p_code+"<br>";
-										/* +"<label>"+this.p_name+"&nbsp+"this.o_num"+</label>" */
+							str += "<label for='"+index+"'><input type='radio' name='p_product' id='"+index+"' value1='"+this.p_code+"' value2='"+this.p_size+"'>"
+										+this.p_code+"&nbsp"+this.p_name+"&nbsp<img alt='"+this.p_img+"' src='"+this.p_img+"' width='100px' height='100px'></label><br>";
+										index+=1;
 						}
 					);
 					$('.form-group').append(str);
@@ -147,7 +148,7 @@
        
     </div>
     <!-- Offcanvas Menu End -->
-                                                     
+
     <!-- Header Section Begin -->
     <header class="header">
         <div class="header__top">
@@ -159,10 +160,24 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="#">Sign in</a>
-                                <a href="#">Customer Service</a>
+                            <c:choose>
+                            <c:when test="${mem_id == null }">
+                                <a href="cm/register">회원가입</a>
+                                <a href="cm/loginForm">로그인</a>
+                            </c:when>
+                            <c:when test="${mem_id != null && mem_admin == 0}">
+                                <span style="color: white; padding-right: 20px;">${mem_id }님</span>
+                                <a href="cm/logout">로그아웃</a>
+                                <a href="myPageForm">마이페이지</a>
+                            </c:when>
+                            <c:when test="${mem_admin == 1 }">
+                            	<span style="color: white; padding-right: 20px;">${mem_id }님</span>
+                                <a href="cm/logout">로그아웃</a>
+                                <a href="adminPageForm">관리자페이지</a>
+                            </c:when>
+                            </c:choose>
+                                <a href="faqListAll">고객센터</a>
                             </div>
-                      
                         </div>
                     </div>
                 </div>
@@ -172,34 +187,32 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="home"><img src="img/logo.JPG" alt="" width="150px" height="70px"></a>
+                        <a href="home"><img src="img/PIB_logo.png" alt="" width="120px" height="50px"></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="home">Home</a></li>
-                            <li><a href="#">Men</a></li>
-                            <li><a href="#">Women</a>
-                                <ul class="dropdown">
-                                    <!-- <li><a href="./about.html">About Us</a></li>
+                            <li><a href="bhPro">All</a></li>
+                            <li><a href="bhProT">Tops</a></li>
+                            <li><a href="bhProB">Trousers</a></li>
+                            <li><a href="bhProA">Accessories</a></li>
+                            <li><a href="bhProS">Shoes</a></li>
+                            <!-- <ul class="dropdown">
+                                    <li><a href="./about.html">About Us</a></li>
                                     <li><a href="./shop-details.html">Shop Details</a></li>
                                     <li><a href="./shopping-cart.html">Shopping Cart</a></li>
                                     <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li> -->
-                                </ul>
-                            </li>
-                            <li><a href="#">Items</a></li>
-                            <li><a href="#">Shoes</a></li>
+                                    <li><a href="./blog-details.html">Blog Details</a></li> 
+                                </ul> -->
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <a href="wishList"><img src="img/icon/heart.png" alt=""></a>
+                        <a href="cartList"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
                     </div>
                 </div>
             </div>
@@ -248,6 +261,7 @@
 			<input type="submit" value="확인" class="primary-btn">
 		</form>
 		</div>
+		
 		</div>
     </section>
     
@@ -293,43 +307,45 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                            <a href="home"><img src="img/PIB_logo_white1.png" alt=""></a>
                         </div>
-                        <p>The customer is at the heart of our unique business model, which includes design.</p>
-                        <a href="#"><img src="img/payment.png" alt=""></a>
+                        <p>Providing Incomparable Beauty</p>
+                        <img src="img/payment.png" alt="">
                     </div>
                 </div>
                 <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
                     <div class="footer__widget">
                         <h6>Shopping</h6>
                         <ul>
-                            <li><a href="#">Clothing Store</a></li>
-                            <li><a href="#">Trending Shoes</a></li>
-                            <li><a href="#">Accessories</a></li>
-                            <li><a href="#">Sale</a></li>
+                        	<li><a href="bhPro">All</a></li>
+                            <li><a href="bhProT">Top</a></li>
+                            <li><a href="bhProB">Trousers</a></li>
+                            <li><a href="bhProA">Accessories</a></li>
+                            <li><a href="bhProS">Shoes</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6">
                     <div class="footer__widget">
-                        <h6>Shopping</h6>
+                        <h6>Service Center</h6>
                         <ul>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Delivary</a></li>
-                            <li><a href="#">Return & Exchanges</a></li>
+                            <li><a href="faqListAll">FAQ</a></li>
+                            <li><a href="#">NOTICE</a></li>
+
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
                     <div class="footer__widget">
-                        <h6>NewLetter</h6>
+                        <h6>PIB - People In Black</h6>
                         <div class="footer__newslatter">
-                            <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                            <form action="#">
+                            <p>Motivated and inspired by the Hollywood blockbuster movie Men In Black, 
+								the goal of our company is to provide simplicity and equality to each and every one of our customers.
+								Our website was made by Group2 who were first assembled in "Choongang Institute".</p>
+                            <!-- <form action="#">
                                 <input type="text" placeholder="Your email">
                                 <button type="submit"><span class="icon_mail_alt"></span></button>
-                            </form>
+                            </form> -->
                         </div>
                     </div>
                 </div>

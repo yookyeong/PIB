@@ -22,7 +22,6 @@
 </style>
 
 <script src="js/jquery1.js"></script>	<!-- ajax 사용하려면 필수  -->
-<script type="text/javascript" src="js/httpRequest.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script type="text/javascript">
@@ -31,11 +30,15 @@
 
 	function getMemberInfo(Vmem_id) {
 		alert("Vmem_id -> "+ Vmem_id);
+		
+		/* ${order1ManagerC.mem_id } */
+		
 		$.ajax({	
 			url:"<%=context%>/getMemberInfo",	
-			data:{mem_id : Vmem_id},
-			dataType:'json',						
-			success:function(data){		
+			data:{mem_id : Vmem_id},/* 보낼때 */
+			dataType:'json',/* 리턴 */
+			
+			success:function(data){	
 				str1 = data.mem_tel
 				str2 = data.mem_email
 				$('#Jmem_tel').val(str1);
@@ -48,7 +51,6 @@
 </head>
 <body>
 <h2>관리자 - 완료된 주문</h2>
-<c:set var="num" value="${pg.total-pg.start+1}"></c:set>
 <form action="order1Search?currentPage=${pg.currentPage}">
 		<input type="text" name="q" placeholder="주문번호로 검색" required="required" style = "width:300px;">
 		<input type="submit" value="확인">
@@ -61,6 +63,7 @@
 					<th>주문번호</th><th>구매자</th><th>받으시는 분</th><th>받으시는 분 연락처</th><th>받으시는 분 주소</th><th>수량</th><th>금액</th><th>주문상태</th>
 				</tr>
 			</thead>
+			<c:if test="${total > 0 }">
 			<c:forEach var="order1ManagerC" items="${order1ListManagerC }">
 			<tbody>
 				<tr>
@@ -92,8 +95,13 @@
 					</td>
 				</tr>
 			</tbody>
-			<c:set var="num" value="${num - 1 }"></c:set>
 		</c:forEach>
+		</c:if>
+		<c:if test="${total == 0 }">
+			<tr>
+				<td>주문내역이 없습니다</td>
+			</tr>
+	</c:if>
 	</table>
 	<div>
 	전화번호 : <input type="text" id="Jmem_tel"  readonly="readonly"><p>

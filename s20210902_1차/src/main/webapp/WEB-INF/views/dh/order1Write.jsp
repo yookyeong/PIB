@@ -1,16 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="header.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
 <script type="text/javascript" src="js/jquery1.js"></script>	<!-- ajax 사용하려면 필수  -->
-<script type="text/javascript" src="js/httpRequest.js"></script>
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script>
+$(document).ready(function() { 
+	var totalPrice = 0;
+	var totalPay = 0;
+	
+	$('.sumValue').each(function(){ //클래스가 sumValue인 항목의 갯수만큼 진행
+		totalPrice += Number($(this).val()); 
+	});
+	 var totalPay = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	$("#totalPrice").val(totalPay); 
+	});
+</script>
+
 <script>
     function sample6_execDaumPostcode() {
         new daum.Postcode({
@@ -60,25 +73,43 @@
         }).open();
     }
 </script>
+</head>
 <body>
 <h2>주문서 작성 및 배송지 입력</h2>
 <form action="order1Insert" method="post">
-		<table border="1">
+<table border="1">
+	<thead>
+		<tr>
+			<th>이미지</th><th>제품명</th><th>수량</th><th>사이즈</th><th>가격</th><th>취소</th><th>히든</th>
+		</tr>
+	</thead>
+		<tbody>
+		<c:if test="${total > 0 }">
+		<c:forEach var="cartList" items="${cartList }">
 			<tr>
-				<td>
-					<input type="checkbox" name="check1" value="1">
-					<input type="hidden" name="p_code" value="2000">
-					<input type="hidden" name="p_size" value="110">
-					<input type="hidden" name="c_qty" value="2">
-				</td>
-				<td>
-				    <input type="checkbox" name="check1" value="1">
-				    <input type="hidden" name="p_code" value="4002">
-				    <input type="hidden" name="p_size" value="120">
-				    <input type="hidden" name="c_qty" value="1">
-		   		</td> 
+				<td>${cartList.p_img }</td>
+				<td>${cartList.p_name }</td>
+				<td>${cartList.c_qty }</td>
+				<td>${cartList.content }</td>
+				<td>&#8361;<input type="number" class="sumValue" value="${cartList.sumValue }" readonly="readonly" style="border:0 solid black; width: 70px;"></td>
+				<td><a href="cartDelete?c_num=${cartList.c_num }">[취소하기]</a></td>
+				<td><input type="hidden" name="p_code" value="${cartList.p_code }">
+					<input type="hidden" name="p_size" value="${cartList.p_size }">
+					<input type="hidden" name="c_qty" value="${cartList.c_qty }"></td>
 			</tr>
-		    </table>
+	</c:forEach>
+	</c:if>
+		</tbody>
+		<c:if test="${total == 0 }">
+		<tr>
+			<td>장바구니 내역이 없습니다</td>
+		</tr>
+	</c:if>
+	</table>
+	<br>
+	<div>
+		합계 금액 : &#8361;<input type="text" id="totalPrice" readonly="readonly" style="border:0 solid black; width: 70px;"><br>
+	</div>
 				<div>
 					<input type="text" name="o_accept" placeholder="받으시는분" required="required"><br>
 					<input type="tel" name="o_tel" placeholder="000-0000-0000" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" maxlength="13" required="required"><br>
@@ -90,7 +121,8 @@
 					<input type="text"  name="text3" id="sample6_detailAddress" placeholder="상세주소">
 					<input type="text"  name="text4" id="sample6_extraAddress" placeholder="참고항목"><br>
 				</div>
-					<input type="submit" value="주문하기">
+					<button onclick="test()">주문하기</button>
+
 </form>
 </body>
 </html>

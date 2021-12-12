@@ -30,6 +30,12 @@ public interface QnaDao {
 
 	int qnaAdminListCnt(Qna qna);
 
+	int qnaAdminReply(Qna qna);
+
+	int qnaAdminReadContent(Qna qna);
+
+	int qnaReplyStatusCheck(Qna qna);
+
 
 
 }

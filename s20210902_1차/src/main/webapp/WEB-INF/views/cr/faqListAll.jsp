@@ -10,7 +10,7 @@
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>FAQ | PIB</title>
+    <title>PIB FAQ</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
@@ -33,21 +33,83 @@
   </script> -->
     <script type="text/javascript">
 	     function faqList(num){
-	    /* 	$('.title'+num).next().slideToggle().siblings('.content').slideUp(); */
-	         if($('.title'+num).next().css('display') == 'none'){
+	     	$('.title'+num).next().slideToggle().siblings('.content').slideUp();
+	        /*  if($('.title'+num).next().css('display') == 'none'){
 		        $('.title'+num).next().slideToggle();
 		    }else{
 		        $('.title'+num).next().slideUp();
-		    } 
-	    }
+		    } */
+	    } 
     </script>
+    <style type="text/css">
+    	.customer_service {
+    		margin-top: 30px;
+    	}
+    
+    	.customer_service ul {
+    		list-style: none;
+    		display: block;
+    	}
+    	.customer_service ul li {
+    		position: relative;
+		    float: left;
+		    width: 340px;
+		    text-align: center;
+		    border: 0;
+    	}
+    	.customer_service ul li a {
+    		display: block;
+		    height: 50px;
+		    padding: 0;
+		    line-height: 50px;
+		    background: #f6f6f6;
+		    font-size: 18px;
+		    color: #666;
+		    font-weight: 500;
+		    border-left: 1px solid #e6e6e6;
+    	}
+    	.customer_service ul li.on a {
+    		background: #555 !important;
+		    color: #fff;
+		    border: 0;
+    	}
+    	
+    	.customer_service_category {
+    		margin-top: 30px;
+    		text-align: center;
+    		margin-bottom: 30px;
+    	}
+    
+    	.customer_service_category ul {
+    		list-style: none;
+    		display: block;
+    		
+    	}
+    	.customer_service_category ul li {
+    		position: relative;
+		    float: left;
+		    padding-right:20px;
+		    text-align: center;
+		    border: 0;
+    	}
+    	 .customer_service_category ul li a {
+
+		    font-size: 17px;
+		    color: #999;
+		  
+    	}
+    	.customer_service_category ul li.on a {
+    		background: #555 !important;
+		    color: #fff;
+		    border: 0;
+    	} 
+    </style>
 </head>
 
 <body>
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
-        <div></div>
     </div>
 
     <!-- Offcanvas Menu Begin -->
@@ -89,48 +151,59 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="#">Sign in</a>
-                                <a href="#">Customer Service</a>
+                            <c:choose>
+                            <c:when test="${mem_id == null }">
+                                <a href="cm/register">회원가입</a>
+                                <a href="cm/loginForm">로그인</a>
+                            </c:when>
+                            <c:when test="${mem_id != null && mem_admin == 0}">
+                                <span style="color: white; padding-right: 20px;">${mem_id }님</span>
+                                <a href="cm/logout">로그아웃</a>
+                                <a href="myPageForm">마이페이지</a>
+                            </c:when>
+                            <c:when test="${mem_admin == 1 }">
+                            	<span style="color: white; padding-right: 20px;">${mem_id }님</span>
+                                <a href="cm/logout">로그아웃</a>
+                                <a href="adminPageForm">관리자페이지</a>
+                            </c:when>
+                            </c:choose>
+                                <a href="faqListAll">고객센터</a>
                             </div>
-                      
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="home"><img src="img/logo.JPG" alt="" width="150px" height="70px"></a>
+                        <a href="home"><img src="img/PIB_logo.png" alt="" width="120px" height="50px"></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="active"><a href="home">Home</a></li>
-                            <li><a href="#">Men</a></li>
-                            <li><a href="#">Women</a>
-                                <ul class="dropdown">
-                                    <!-- <li><a href="./about.html">About Us</a></li>
+                            <li><a href="bhPro">All</a></li>
+                            <li><a href="bhProT">Tops</a></li>
+                            <li><a href="bhProB">Trousers</a></li>
+                            <li><a href="bhProA">Accessories</a></li>
+                            <li><a href="bhProS">Shoes</a></li>
+                            <!-- <ul class="dropdown">
+                                    <li><a href="./about.html">About Us</a></li>
                                     <li><a href="./shop-details.html">Shop Details</a></li>
                                     <li><a href="./shopping-cart.html">Shopping Cart</a></li>
                                     <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li> -->
-                                </ul>
-                            </li>
-                            <li><a href="#">Items</a></li>
-                            <li><a href="#">Shoes</a></li>
+                                    <li><a href="./blog-details.html">Blog Details</a></li> 
+                                </ul> -->
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
                         <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                        <a href="#"><img src="img/icon/heart.png" alt=""></a>
-                        <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
+                        <a href="wishList"><img src="img/icon/heart.png" alt=""></a>
+                        <a href="cartList"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
                     </div>
                 </div>
             </div>
@@ -138,18 +211,46 @@
         </div>
     </header>
     <!-- Header Section End -->
-    
-	
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>고객센터</h4>
+                        <div class="breadcrumb__links">
+                            <a href="home">Home</a>
+                            <span>FAQ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <section>
-    	<div class="container">
-    	<div>
-    		<span><a href="faqListAll">전체</a></span>
-    		<span><a href="faqListAll?q_mcode=310">제품</a></span>
-    		<span><a href="faqListAll?q_mcode=320">배송</a></span>
-    		<span><a href="faqListAll?q_mcode=330">교환/환불</a></span>
-    		<span><a href="faqListAll?q_mcode=340">주문결제</a></span>
-    		<span><a href="faqListAll?q_mcode=350">기타</a></span>
+    <div class="container">
+    <div class="row">
+    	<div class="col-lg-12 col-md-5">
+	    	<div class="customer_service">
+	    	<ul>
+	    		<li class="on"><a href="faqListAll">FAQ</a></li>
+	    		<li><a href="qnaClientList">1:1문의</a></li>
+	    		<li><a href="noticeList">공지사항</a></li>
+	    	</ul>
+	    	</div>
     	</div>
+    	<div class="col-lg-12 col-md-5">
+    	<div class="customer_service_category">
+    	<ul>
+    		<li><a href="faqListAll">전체</a></li>
+    		<li><a href="faqListAll?q_mcode=310">제품</a></li>
+    		<li><a href="faqListAll?q_mcode=320">배송</a></li>
+    		<li><a href="faqListAll?q_mcode=330">교환/환불</a></li>
+    		<li><a href="faqListAll?q_mcode=340">주문결제</a></li>
+    		<li><a href="faqListAll?q_mcode=350">기타</a></li>
+    	</ul>
+    	</div>
+    	</div>
+    </div>
     	<div class="shopping__cart__table">
     		<ul style="list-style: none;">
     			<c:forEach var="faq" items="${faqList }">
@@ -188,43 +289,45 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                            <a href="home"><img src="img/PIB_logo_white1.png" alt=""></a>
                         </div>
-                        <p>The customer is at the heart of our unique business model, which includes design.</p>
-                        <a href="#"><img src="img/payment.png" alt=""></a>
+                        <p>Providing Incomparable Beauty</p>
+                        <img src="img/payment.png" alt="">
                     </div>
                 </div>
                 <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
                     <div class="footer__widget">
                         <h6>Shopping</h6>
                         <ul>
-                            <li><a href="#">Clothing Store</a></li>
-                            <li><a href="#">Trending Shoes</a></li>
-                            <li><a href="#">Accessories</a></li>
-                            <li><a href="#">Sale</a></li>
+                        	<li><a href="bhPro">All</a></li>
+                            <li><a href="bhProT">Top</a></li>
+                            <li><a href="bhProB">Trousers</a></li>
+                            <li><a href="bhProA">Accessories</a></li>
+                            <li><a href="bhProS">Shoes</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6">
                     <div class="footer__widget">
-                        <h6>Shopping</h6>
+                        <h6>Service Center</h6>
                         <ul>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Delivery</a></li>
-                            <li><a href="#">Return & Exchanges</a></li>
+                            <li><a href="faqListAll">FAQ</a></li>
+                            <li><a href="#">NOTICE</a></li>
+
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
                     <div class="footer__widget">
-                        <h6>NewLetter</h6>
+                        <h6>PIB - People In Black</h6>
                         <div class="footer__newslatter">
-                            <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                            <form action="#">
+                            <p>Motivated and inspired by the Hollywood blockbuster movie Men In Black, 
+								the goal of our company is to provide simplicity and equality to each and every one of our customers.
+								Our website was made by Group2 who were first assembled in "Choongang Institute".</p>
+                            <!-- <form action="#">
                                 <input type="text" placeholder="Your email">
                                 <button type="submit"><span class="icon_mail_alt"></span></button>
-                            </form>
+                            </form> -->
                         </div>
                     </div>
                 </div>

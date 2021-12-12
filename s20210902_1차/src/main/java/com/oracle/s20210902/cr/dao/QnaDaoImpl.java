@@ -156,6 +156,42 @@ public class QnaDaoImpl implements QnaDao {
 		return total;
 	}
 
+	@Override
+	public int qnaAdminReply(Qna qna) {
+		int result = 0;
+		System.out.println("QnaDaoImpl qnaAdminReply Start...");
+		try {
+			result = session.update("crQnaAdminReply", qna);
+		}catch (Exception e) {
+			System.out.println("QnaDaoImpl qnaAdminReply Exception -->"+e.getMessage());
+		}
+		return result;
+	}
+
+	@Override
+	public int qnaAdminReadContent(Qna qna) {
+		int result = 0;
+		System.out.println("QnaDaoImpl qnaAdminReadContent Start...");
+		try {
+			result = session.update("crQnaAdminReadContent", qna);
+		}catch (Exception e) {
+			System.out.println("QnaDaoImpl qnaAdminReadContent Exception -->"+e.getMessage());
+		}
+		return result;
+	}
+
+	@Override
+	public int qnaReplyStatusCheck(Qna qna) {
+		int reStatus = 0;
+		System.out.println("QnaDaoImpl qnaReplyStatusCheck Start...");
+		try {
+			reStatus = session.selectOne("crQnaReplyStatusCheck", qna);
+		}catch (Exception e) {
+			System.out.println("QnaDaoImpl qnaReplyStatusCheck Exception -->"+e.getMessage());
+		}
+		return reStatus;
+	}
+
 	
 
 }

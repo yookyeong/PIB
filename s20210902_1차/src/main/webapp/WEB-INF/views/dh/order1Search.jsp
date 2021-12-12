@@ -14,8 +14,6 @@ A:hover {text-decoration:none; color: #646464;}
 </head>
 <body>
 <h2>관리자 - 완료된 주문</h2>
-<c:set var="num" value="${pg.total-pg.start+1}"></c:set>
-
 <form action="order1Search?currentPage=${pg.currentPage}">
 		<input type="text" name="q" placeholder="주문번호로 검색" required="required" style = "width:300px;">
 		<input type="submit" value="확인">
@@ -27,6 +25,7 @@ A:hover {text-decoration:none; color: #646464;}
 					<th>상품정보</th><th>주문일자</th><th>주문번호</th><th>구매자</th><th>받으시는 분</th><th>받으시는 분 연락처</th><th>받으시는 분 주소</th><th>수량</th><th>금액</th><th>주문상태</th>
 				</tr>
 			</thead>
+			<c:if test="${total > 0 }">
 			<c:forEach var="order1ManagerS" items="${order1ListManagerCSearch }">
 			<tbody>
 				<tr>
@@ -58,6 +57,12 @@ A:hover {text-decoration:none; color: #646464;}
 				</tr>
 			</tbody>
 		</c:forEach>
+		</c:if>
+	<c:if test="${total == 0 }">
+			<tr>
+				<td>주문하신 상품이 없습니다</td>
+			</tr>
+	</c:if>
 	</table>
 	<div>
 <c:if test="${pg.startPage > pg.pageBlock }">

@@ -18,18 +18,19 @@ public class LatestProductPaging {
 	
 	public LatestProductPaging(int total, String currentPage8) {
 		this.total = total;
-		if(currentPage8 == null) {
+		if (currentPage8 == null) {
 			this.currentPage = 1;
-		}else {
-			this.currentPage = Integer.parseInt(currentPage8); 
+		} else {
+			this.currentPage = Integer.parseInt(currentPage8);			
 		}
-		start = (currentPage - 1) * rowPage + 1;	// 시작시 1
-		end = start + rowPage - 1;					// 시작시 10
-		totalPage = (int) Math.ceil((double)total / rowPage);		// 시작시 2
-		startPage = currentPage - (currentPage - 1) % pageBlock;	// 시작시 1
+		start = (currentPage - 1) * rowPage + 1;  // 첫페이지에서 보여줄 DB상에서 rn값이 1인 글 
+		end   = start + rowPage - 1;              // 첫페이지에서 보여줄 DB상에서 rn값이 10인 글 
+		totalPage = (int) Math.ceil((double)total / rowPage);  // 시작시 2
+		startPage = currentPage - (currentPage - 1) % pageBlock; // 시작시 1
 		endPage = startPage + pageBlock - 1;
-		if(endPage > totalPage) {
+		if (endPage > totalPage) {
 			endPage = totalPage;
 		}
 	}
+	
 }

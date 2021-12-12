@@ -8,9 +8,17 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<c:if test="${result >0 }">
 	<script type="text/javascript">
-		alert("주문이 성공적으로 완료되었습니다");
-		location.href="order1List";
+		alert("성공적으로 주문되었습니다");
+		location.href = "order1List";
 	</script>
+	</c:if >
+	<c:if test="${result == 0}">
+		<script type="text/javascript">
+			alert("주문에 실패하였습니다");
+			history.back();
+			</script>
+		</c:if>
 </body>
 </html>

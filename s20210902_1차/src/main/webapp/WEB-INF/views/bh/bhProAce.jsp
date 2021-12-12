@@ -9,6 +9,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" src="js/jquery1.js"></script>
+<!-- javaScript js파일 추가 -->
+<script src="js/wishiListAjax.js"></script>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>PIB 용품</title>
@@ -50,16 +53,15 @@
 			<th>상품명</th>
 			<th>상품이미지</th>
 			<th>상품가격</th>
-			<th>Cart/WishList</th>
+			<th>위시리스트</th>
 		</tr>
 		<c:forEach var="product" items="${listPro}">
 			<tr>
 				<td>${product.p_name}</td>
 				<td><a href="bhDetail?p_code=${product.p_code}"><input type="image" src="${product.p_img }" style="width:150px;height:150px;" +></a></td>
 				<td>${product.p_price}</td>
-				<td colspan="2">
-					<input type="button" value="장바구니 담기" > 
-					<input type="button" value="위시리스트 담기">
+				<td colspan="1">
+					<input type="button" value="위시리스트 담기" onclick="wishiInsert(${product.p_code})">
 				</td>
 			</tr>
 			<c:set var="num" value="${num - 1 }"></c:set>

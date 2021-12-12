@@ -58,9 +58,10 @@
 			<th>상품가격</th>
 			<th>Cart/WishList</th>
 		</tr>
-		<c:if test="${listProSearch.size() == 0 }">
-    	    <h2>검색 결과가 없습니다.</h2>
-        </c:if>
+	<c:if test="${listProSearch.size() == 0}">
+		<div>검색 결과가 없습니다.</div>
+	</c:if>
+	<c:if test="${listProSearch.size() > 0 }">		
 		<c:forEach var="product" items="${listProSearch}">
 			<tr>
 				<td>${product.p_name}</td>
@@ -73,6 +74,7 @@
 			</tr>
 			<c:set var="num" value="${num - 1 }"></c:set>
 		</c:forEach>
+	</c:if>
 	</table>
 <c:if test="${pg.startPage > pg.pageBlock }">
 	<a href="proSearch?currentPage=${pg.startPage-pg.pageBlock}">[이전]</a>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NoticeDao">
+	<select id="jmNoticeTotal"  resultType="int">
+		select count(*) FROM notice
+	</select>
+
+    <select id="jmNoticeListAll" parameterType="Notice" resultType="Notice">
+     	SELECT *
+		FROM
+		  (
+		    Select rownum rn , a.*
+		    From   (select * from notice order by n_num desc) a
+		  )
+		WHERE rn between #{start} and #{end}
+     </select>
+     
+    <!--  <select id="jmNoticeListAll2" parameterType="Notice" resultType="Notice">
+	    <![CDATA[
+	         select * 
+	         from (select rownum rn, a.* 
+	               from (select * from notice order by n_num) a
+	              ) 
+	    	 where rn >= #{start} 
+	    	 and   rn <= #{end}    
+	     ]]>	 
+
+     </select> -->
+     
+     <select id="jmNoticeSelOne"  parameterType="int" resultType="Notice" >
+       select * From notice Where n_num = #{n_num}   
+     </select> 
+
+   <update id="jmNoticeUpdate" parameterType="Notice">
+	 update notice 
+	 set    n_content=#{n_content}, n_title=#{n_title},
+	        n_date=sysdate
+	 where  n_num=#{n_num}
+   </update>
+
+   <select id="jmSelectManager" resultType="Notice">
+        SELECT   * 
+        FROM    notice 
+        WHERE   n_num in (from notice)
+    </select>
+
+   <insert id="insertNotice" parameterType="Notice" >
+		INSERT INTO NOTICE VALUES (NOTICE_SEQ.NEXTVAL, #{n_title}, #{n_content}, #{n_date}, sysdate)
+   </insert>
+
+   <delete id="noticeDelete" parameterType="int">
+	    delete from notice where n_num=#{n_num}
+   </delete>     
+       
+
+</mapper>

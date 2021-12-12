@@ -236,6 +236,18 @@ public class Order1DaoImpl implements Order1Dao {
 		}
 		return member;
 	}
+
+
+	@Override
+	public int remove(Order1 order1) {
+		int result = 0;
+		try {
+			result = session.delete("dhRemove", order1);
+		} catch (Exception e) {
+			System.out.println("Order1DaoImpl->" + e.getMessage());
+		}
+		return result;
+	}
 	
 	
 	

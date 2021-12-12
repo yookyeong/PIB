@@ -32,6 +32,7 @@ A:hover {text-decoration:none; color: #646464;}
 			<th>상품정보</th><th>주문일자</th><th>주문번호</th><th>받으시는 분</th><th>받으시는 분 연락처</th><th>받으시는 분 주소</th><th>수량</th><th>금액</th><th>주문상태</th>
 		</tr>
 	</thead>
+	<c:if test="${total > 0 }">
 	<c:forEach var="order1C" items="${order1Category }">
 	<tbody>
 		<tr>
@@ -68,8 +69,13 @@ A:hover {text-decoration:none; color: #646464;}
 			</td>
 		</tr>
 	</tbody>
-	<c:set var="num" value="${num - 1 }"></c:set>
 	</c:forEach>
+	</c:if>
+		<c:if test="${total == 0 }">
+		<tr>
+			<td>주문하신 상품이 없습니다</td>
+		</tr>
+	</c:if>
 </table>
 <div>
 <c:if test="${pg.startPage > pg.pageBlock }">

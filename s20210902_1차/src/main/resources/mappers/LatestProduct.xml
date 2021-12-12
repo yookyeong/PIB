@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="LatestProductDao">
-	<select id="knListTotal" 		resultType="int">
-		select count(*) FROM product
-	</select>
 	
 	<select id="knSearchListTotal" 	parameterType="String"	resultType="int">
 		select count(*) FROM product
@@ -13,8 +10,9 @@
 	</select>
 	
 	
+	<!-- keyword 검색 -->
 	<select id="knSearchListALL"	parameterType="Product"		resultType="latestproduct">
-		SELECT *			<!-- 대표 코드 협의 후 수정 할 것 -->
+		SELECT *
 		FROM
   		 (
  		   Select rownum rn , a.*
@@ -27,23 +25,64 @@
 	</select>
 	
 	
-	<select id="knRepListTotal" 	parameterType="String"	resultType="int">
-		select count(*) FROM product
-		where p_size like '120' 
-		order by p_code asc
+	<select id="knRepListTotal" 	parameterType="LatestProduct"	resultType="int">
+		select count(*) FROM Latest_Product
+		where mem_id = #{mem_id}
 	</select>
 	
 	
-	<select id="knRepListALL"	parameterType="Product"		resultType="latestproduct">
-		SELECT *			<!-- 대표 코드 협의 후 수정 할 것 -->
+	<!-- 로그인 시 최근 본 상품 list -->
+	<select id="knRepListALL"	parameterType="LatestProduct"	resultType="Latestproduct">
+		SELECT *
 		FROM
-  		 (
- 		   Select rownum rn , a.*
-  		   From (	select * from product 
-					where p_size like '120' 
-  		         ) a
- 		  )
-		WHERE rn BETWEEN #{start} and #{end}
+		 (
+		 	Select rownum rn , a.*
+		 	From (	select p.p_name, p.p_img, p.p_price, l.l_date, l.p_code
+     	      		from latest_product l, product p
+      	      		where mem_id = #{mem_id}
+     	       		and p.p_code=l.p_code
+             		and p_size like '120' 
+    	       		order by l.l_date desc
+    	       	) a
+    	 	) 
+    	 WHERE rn BETWEEN #{start} and #{end}
 	</select>
 	
+	
+	<!-- 최근 본 리스트 저장 -->
+	<insert id="knInsertLatestProduct" parameterType="LatestProduct" >
+		 insert into LATEST_PRODUCT values (#{mem_id},#{p_code},sysdate ) 
+    </insert>
+    
+    
+    <delete id="knDeleteLatestProduct" parameterType="int">
+		DELETE 
+		   FROM Latest_Product
+		WHERE p_code=#{p_code}
+	</delete>
+	
+	
+	<update id="knUpdateLatestProduct" parameterType="LatestProduct">
+		update latest_product
+			set l_date = sysdate
+		where mem_id = #{mem_id}
+			and p_code = #{p_code}
+	</update>
+	
+	
+	<select id="knSelectLatestProduct" parameterType="LatestProduct" resultType="int">
+		select count(*)
+		from latest_product
+		where mem_id = #{mem_id}
+		and p_code = #{p_code}
+	</select>
+	
+	
+	<select id="knReSelectLatestProduct">
+		select count(*)
+		from latest_product
+		where mem_id = #{mem_id}
+		and p_code = #{p_code}
+		order by l.l_date desc
+	</select>
 </mapper>

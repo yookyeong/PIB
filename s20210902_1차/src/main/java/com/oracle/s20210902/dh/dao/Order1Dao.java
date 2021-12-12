@@ -45,6 +45,8 @@ public interface Order1Dao {
 
 	Member selectMem(String mem_id);
 
+	int remove(Order1 order1);
+
 
 
 	

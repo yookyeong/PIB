@@ -10,7 +10,17 @@
 	</select>
 	
 	<select id="memberListAll" parameterType="Member" resultType="Member">
-		SELECT *
+		SELECT  MEM_ID
+			 , MEM_PASSWD
+			 , MEM_NAME
+			 , MEM_TEL
+			 , MEM_EMAIL
+			 , MEM_ADDRESS1
+			 , MEM_ADMIN
+			 , MEM_NO
+			 , MEM_ADDRESS2
+			 , MEM_ADDRESS3
+			 , DECODE(MEM_DELETE, '1', '탈퇴', '정상') AS MEM_DELETE
 			FROM MEMBER
 			ORDER BY mem_no DESC
 	</select>
@@ -34,10 +44,10 @@
 	</delete>
 	
 	<insert id="register" parameterType="Member" >
-		INSERT INTO member(mem_id, mem_passwd, mem_name, mem_tel, mem_email, mem_address1, mem_admin, mem_no, mem_address2, mem_address3)
+		INSERT INTO member(mem_id, mem_passwd, mem_name, mem_tel, mem_email, mem_address1, mem_admin, mem_no, mem_address2, mem_address3, mem_delete)
 		   VALUES(#{mem_id}, #{mem_passwd}, #{mem_name}, #{mem_tel}, #{mem_email}, #{mem_address1}, 0
 		   , (SELECT NVL(MAX(MEM_NO), 0) + 1 FROM MEMBER)
-		   , #{mem_address2}, #{mem_address3})
+		   , #{mem_address2}, #{mem_address3}, 0)
 	</insert>
 	
 	<select id="idCheck" parameterType="java.lang.String" resultType="int">
@@ -64,7 +74,16 @@
 		   
 	</select>
 	
-	
+	<update id="managerDelete" parameterType="Member" >
+		UPDATE member
+		   SET mem_delete=1
+		 WHERE mem_no=#{mem_no}
+	</update>
+	<update id="managerRestore" parameterType="Member" >
+		UPDATE member
+		   SET mem_delete=0
+		 WHERE mem_no=#{mem_no}
+	</update>
 	
 	
 </mapper>

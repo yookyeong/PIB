@@ -16,5 +16,12 @@ public class Review {
 	private int re_indent;
 	private int re_step;
 	private String r_img;
+	
+	
+	private String search;   
+	private String keyword;
+	private String pageNum;  
+	private int start; 		 
+	private int end;
 
 }

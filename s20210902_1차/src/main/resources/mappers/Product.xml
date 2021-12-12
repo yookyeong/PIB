@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ProductDao">
 	<select id="bhProTotal"  resultType="int">
-		select count(*) from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price from product)
+		select count(*) from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, TO_CHAR(p_date,'YYYYMMDD') p_date, p_img, p_price from product)
 	</select>
 	
 	<select id="bhProTotalP" parameterType="Product" resultType="int">
-	 	  select count(*) from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price 
+	 	  select count(*) from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, TO_CHAR(p_date,'YYYYMMDD') p_date, p_img, p_price 
                       from product 
                       where p_c_mcode = #{p_c_mcode}) 
 	 </select>
@@ -15,7 +15,7 @@
 	    <![CDATA[
 	         select * 
 	         from (select rownum rn, a.* 
-	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price from product order by p_code) a
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, TO_CHAR(p_date,'YYYYMMDD') p_date, p_img, p_price from product order by p_code) a
 	              ) 
 	    	 where rn >= #{start} 
 	    	 and   rn <= #{end}    
@@ -26,7 +26,7 @@
 	    <![CDATA[
 	         select * 
 	         from (select rownum rn, a.* 
-	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price from product order by p_hit desc) a
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, TO_CHAR(p_date,'YYYYMMDD') p_date, p_img, p_price from product order by p_hit desc) a
 	              ) 
 	    	 where rn >= #{start} 
 	    	 and   rn <= #{end}    
@@ -37,7 +37,7 @@
 	    <![CDATA[
 	         select * 
 	         from (select rownum rn, a.* 
-	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price from product order by p_date desc) a
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, TO_CHAR(p_date,'YYYYMMDD') p_date, p_img, p_price from product order by p_date desc) a
 	              ) 
 	    	 where rn >= #{start} 
 	    	 and   rn <= #{end}    
@@ -48,7 +48,7 @@
 	    <![CDATA[
 	         select * 
 	         from (select rownum rn, a.* 
-	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price from product order by p_price desc) a
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, TO_CHAR(p_date,'YYYYMMDD') p_date, p_img, p_price from product order by p_price desc) a
 	              ) 
 	    	 where rn >= #{start} 
 	    	 and   rn <= #{end}    
@@ -59,7 +59,7 @@
 	    <![CDATA[
 	         select * 
 	         from (select rownum rn, a.* 
-	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price from product order by p_price) a
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, TO_CHAR(p_date,'YYYYMMDD') p_date, p_img, p_price from product order by p_price) a
 	              ) 
 	    	 where rn >= #{start} 
 	    	 and   rn <= #{end}    
@@ -70,7 +70,7 @@
 	    <![CDATA[
 	         select * 
 	         from (select rownum rn, a.* 
-	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, TO_CHAR(p_date,'YYYYMMDD') p_date, p_img, p_price 
                          from product 
                          where p_c_mcode = #{p_c_mcode} 
                          order by p_code) a
@@ -81,7 +81,7 @@
      </select>
      
      <select id="bhProSelOne" parameterType="int" resultType="Product">
-     	 select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price
+     	 select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_img, p_price
          from product
          where p_code = #{p_code}
      </select>
@@ -90,7 +90,7 @@
 	 		<![CDATA[
 	         select * 
 	         from (select rownum rn, a.* 
-	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, TO_CHAR(p_date,'YYYYMMDD') p_date, p_img, p_price 
          				 from product 
                          where p_c_mcode = #{p_c_mcode}
                          order by p_price) a
@@ -103,7 +103,7 @@
 	 		<![CDATA[
 	         select * 
 	         from (select rownum rn, a.* 
-	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, TO_CHAR(p_date,'YYYYMMDD') p_date, p_img, p_price 
                          from product 
                          where p_c_mcode = #{p_c_mcode}
          				 order by p_date desc) a
@@ -116,7 +116,7 @@
 	 		<![CDATA[
 	         select * 
 	         from (select rownum rn, a.* 
-	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, TO_CHAR(p_date,'YYYYMMDD') p_date, p_img, p_price 
          				from product 
        					where p_c_mcode = #{p_c_mcode}
        				    order by p_hit desc) a
@@ -129,7 +129,7 @@
 	 		<![CDATA[
 	         select * 
 	         from (select rownum rn, a.* 
-	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, p_date, p_img, p_price 
+	               from (select distinct p_code, p_name, p_c_bcode, p_c_mcode, p_hit, TO_CHAR(p_date,'YYYYMMDD') p_date, p_img, p_price 
          				 from product 
          				 where p_c_mcode = #{p_c_mcode}
          				 order by p_price desc) a

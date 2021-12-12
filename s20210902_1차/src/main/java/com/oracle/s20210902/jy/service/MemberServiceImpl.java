@@ -69,4 +69,16 @@ public class MemberServiceImpl implements MemberService {
 	public String findPw(Member member) {
 		return md.findPw(member);
 	}
+
+	@Override
+	public int managerDelete(Member member) {
+		System.out.println("MemberService managerDelete");
+		return md.managerDelete(member);
+	}
+
+	@Override
+	public int managerRestore(Member member) {
+		System.out.println("MemberService managerRestore");
+		return md.managerRestore(member);
+	}
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReviewDao">
+	<insert id="bhInsertRev" parameterType="Review">
+		insert into review (MEM_ID, R_IMG, R_CONTENT, R_SCORE)
+		values (#{MEM_ID}, #{R_IMG}, #{R_CONTENT}, #{R_SCORE})
+	</insert>
+	
+	<select id="bhExist" parameterType="Order1" resultType="Order1">
+		select * 
+		from order1
+		where mem_id = #{mem_id}
+		and p_code = #{p_code}
+	</select>
+	
+	<select id="bhRevTotal" resultType="int">
+		select count(*) from 
+						(select distinct * 
+ 						from review 
+ 						where p_code = #{p_code})
+	</select>
+	
+	<select id="bhRevList" parameterType="Review" resultType="Review">
+		<![CDATA[
+	         select * 
+	         from (select rownum rn, a.* 
+	               from (select distinct * 
+	               from review
+	               where p_code = #{p_code}
+	               order by reply desc, re_step asc) a
+	              ) 
+	    	 where rn >= #{start} 
+	    	 and   rn <= #{end}    
+	     ]]>
+	</select>
+	
+	<insert id="bhInsertReview" parameterType="Review">
+		insert into review (r_num, p_code, p_size, mem_id, r_content, r_score, r_img, reply)
+		values ((select max(r_num)+1 from review), #{p_code}, #{p_size}, #{mem_id}, #{r_content}, #{r_score}, #{r_img}, (select max(r_num)+1 from review))
+	</insert>
+	
+	<update id="bhUpdateReview" parameterType="Review">
+		update review
+		set r_content = #{r_content},
+    		r_score = #{r_score},
+   			r_img = #{r_img}
+		where p_code = #{p_code} and mem_id = #{mem_id} 
+	</update>
+	
+	<select id="bhSelectRevUp" parameterType="Review" resultType="Review">
+		select * 
+		from review 
+		where mem_id = #{mem_id} and p_code = #{p_code} and p_size = #{p_size}
+	</select>
+	
+	<delete id="bhDeleteReview" parameterType="Review">
+	    delete from review where p_code = #{p_code} and mem_id = #{mem_id} 
+    </delete>
+	
+		
+	
+</mapper>

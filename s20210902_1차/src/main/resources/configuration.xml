@@ -8,6 +8,8 @@
 		<typeAlias alias="Order1" type="com.oracle.s20210902.model.Order1"/>
 		<typeAlias alias="LatestProduct" type="com.oracle.s20210902.model.LatestProduct"/>
 		<typeAlias alias="Product" type="com.oracle.s20210902.model.Product"/>
+		<typeAlias alias="Review" type="com.oracle.s20210902.model.Review" />
+		<typeAlias type="com.oracle.s20210902.model.Notice" alias="Notice"/>
 	</typeAliases>
 </configuration>
 
