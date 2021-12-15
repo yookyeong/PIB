@@ -12,12 +12,10 @@
 		from
 		(
 		select
-		p.p_code,p.p_name,p.p_size,p.p_c_mcode,p.p_qty,c1.content s_name,
-		c2.content
-		cate_name
+		p.p_code,p.p_name,p.p_size,p.p_c_mcode,p.p_qty,p.p_img,
+		c1.content s_name,c2.content cate_name
 		from product p,common c1,common c2
-		where p.p_size =
-		c1.mcode
+		where p.p_size = c1.mcode
 		and p.p_c_mcode=c2.mcode
 		order by p_code
 		)

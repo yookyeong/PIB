@@ -262,9 +262,9 @@ public class ProductController {
 		System.out.println("getP_img"+product.getP_img());
        
 		int result=0;
-		System.out.println("ProductController productDelete result->"+result);
-		result = ps.productDelete(product);
 		
+		result = ps.productDelete(product);
+		System.out.println("ProductController productDelete result->"+result);
 		
 		model.addAttribute("result", result);
 		model.addAttribute("p_code", product.getP_code());
